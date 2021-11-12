@@ -3,4 +3,7 @@ channels:
   - defaults
 dependencies:
   - flask=2.0.2=pyhd3eb1b0_0
+  - pip
+  - pip:
+    - twilio
 prefix: /Users/stephenlprice/anaconda3/envs/tableau-twilio
