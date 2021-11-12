@@ -2,7 +2,8 @@ name: tableau-twilio
 channels:
   - defaults
 dependencies:
-  - flask=2.0.2=pyhd3eb1b0_0
+  - flask=2.0.2
+  - gunicorn
   - pip
   - pip:
     - twilio
