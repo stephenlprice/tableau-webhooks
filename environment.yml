@@ -7,4 +7,5 @@ dependencies:
   - pip
   - pip:
     - twilio
+    - tableauserverclient
 prefix: /Users/stephenlprice/anaconda3/envs/tableau-twilio
