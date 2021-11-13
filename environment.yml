@@ -6,6 +6,7 @@ dependencies:
   - gunicorn
   - pip
   - pip:
+    - python-dotenv
     - twilio
     - tableauserverclient
 prefix: /Users/stephenlprice/anaconda3/envs/tableau-twilio
