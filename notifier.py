@@ -1,12 +1,27 @@
-import os, sys
+import os
 from flask import Flask, request, redirect, url_for
+from dotenv import load_dotenv
 import tableauserverclient as TSC
 from tableauserverclient.models.pagination_item import PaginationItem
 
+# load environment files from .env
+load_dotenv("./.env")
 # calling environ is expensive, this saves environment variables to a dictionary
 env_dict = dict(os.environ)
 
 app = Flask(__name__)
+
+# dictionary with required environment variables
+env_vars = ["TABLEAU_PAT_NAME", "TABLEAU_PASSWORD", "TABLEAU_SITENAME", "TABLEAU_SERVER"]
+# check that each environment variable is available, else throw an exception
+for vars in env_vars:
+  try:
+      # check the local dictionary pulled from os.environ
+      env_dict[vars]
+  except KeyError:
+    # output the first environment variable to fail
+    print(f"ERROR: please set the environment variable {vars}!")
+    raise RuntimeError("Environment variables not available, server shutting down...")
 
 # an API index listing supported endpoints and methods
 @app.route("/")
@@ -16,18 +31,6 @@ def index():
 @app.route("/notifier", methods=["GET", "POST"])
 def notify():
     if request.method == "POST":
-      # dictionary with required environment variables
-      env_vars = ["TABLEAU_PAT_NAME", "TABLEAU_PASSWORD", "TABLEAU_SITENAME", "TABLEAU_SERVER"]
-      # check that each environment variable is available, else throw an exception
-      for vars in env_vars:
-        try:
-            # check the local dictionary pulled from os.environ
-            env_dict[vars]
-        except KeyError:
-          # output the first environment variable to fail
-          print(f"Please set the environment variable {vars}")
-          sys.exit(1)
-
         # creates an authorization object using environment variables
         tableauAuth = TSC.PersonalAccessTokenAuth(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PASSWORD"], env_dict["TABLEAU_SITENAME"])
         # server object using environment variables
