@@ -3,6 +3,7 @@ from flask import Flask, request, redirect, url_for
 from dotenv import load_dotenv
 import tableauserverclient as TSC
 from tableauserverclient.models.pagination_item import PaginationItem
+from twilio.rest import Client
 
 # load environment files from .env
 load_dotenv("./.env")
@@ -12,21 +13,32 @@ env_dict = dict(os.environ)
 app = Flask(__name__)
 
 # dictionary with required environment variables
-env_vars = ["TABLEAU_PAT_NAME", "TABLEAU_PASSWORD", "TABLEAU_SITENAME", "TABLEAU_SERVER"]
+env_vars = [
+  "TABLEAU_PAT_NAME", 
+  "TABLEAU_PASSWORD", 
+  "TABLEAU_SITENAME", 
+  "TABLEAU_SERVER",
+  "TWILIO_ACCOUNT_SID",
+  "TWILIO_AUTH_TOKEN",
+  "TWILIO_FROM_NUMBER",
+  "TO_NUMBER",
+  "WHATSAPP_FROM",
+  "WHATSAPP_TO"
+]
+
 # check that each environment variable is available, else throw an exception
 for vars in env_vars:
   try:
       # check the local dictionary pulled from os.environ
       env_dict[vars]
   except KeyError:
-    # output the first environment variable to fail
-    print(f"ERROR: please set the environment variable {vars}!")
-    raise RuntimeError("Environment variables not available, server shutting down...")
+    # output the first environment variable to fail and shut the server down
+    raise RuntimeError(f"Environment variable {vars} is not available, server shutting down...")
 
 # an API index listing supported endpoints and methods
 @app.route("/")
 def index():
-    return '<h1>API Index</h1>\n<ul><li>/notifier POST - receives incoming Tableau Server webhooks to create datasource failure notifications</li></ul>'
+    return '<h1>Notifier API Index</h1>\n<ul><li>/notifier <strong>POST</strong> - receives incoming Tableau Server webhooks to create datasource failure notifications</li></ul>'
 
 @app.route("/notifier", methods=["GET", "POST"])
 def notify():
