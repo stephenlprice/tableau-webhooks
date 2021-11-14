@@ -3,10 +3,10 @@ channels:
   - defaults
 dependencies:
   - flask=2.0.2
-  - gunicorn
-  - pip
+  - gunicorn=20.1.0
+  - pip=21.2.4
   - pip:
-    - python-dotenv
-    - twilio
-    - tableauserverclient
+    - python-dotenv=0.19.2
+    - twilio=7.3.0
+    - tableauserverclient=0.17.0
 prefix: /Users/stephenlprice/anaconda3/envs/tableau-twilio
