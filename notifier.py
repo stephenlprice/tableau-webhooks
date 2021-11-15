@@ -1,6 +1,6 @@
 import os, datetime
-from flask import Flask, request, redirect, url_for
 from dotenv import load_dotenv
+from flask import Flask, request, redirect, url_for
 import tableauserverclient as TSC
 from tableauserverclient.models.pagination_item import PaginationItem
 from twilio.rest import Client
@@ -9,9 +9,6 @@ from twilio.rest import Client
 load_dotenv("./.env")
 # calling environ is expensive, this saves environment variables to a dictionary
 env_dict = dict(os.environ)
-
-app = Flask(__name__)
-
 # dictionary with required environment variables
 env_vars = [
   "TABLEAU_PAT_NAME", 
@@ -43,6 +40,8 @@ toNumber = env_dict["TWILIO_TO_NUMBER"]
 fromWhatsApp = env_dict["WHATSAPP_FROM"]
 toWhatsApp = env_dict["WHATSAPP_TO"]
 
+# initiate the Flask instance
+app = Flask(__name__)
 
 # an API index listing supported endpoints and methods
 @app.route("/")
