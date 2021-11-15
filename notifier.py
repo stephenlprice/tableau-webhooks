@@ -32,6 +32,7 @@ for vars in env_vars:
     # output the first environment variable to fail and shut the server down
     raise RuntimeError(f"Environment variable {vars} is not available, server shutting down...")
 
+# twilio variables
 twilioSID = env_dict["TWILIO_ACCOUNT_SID"]
 twilioAuthToken = env_dict["TWILIO_AUTH_TOKEN"]
 twilioClient = Client(twilioSID, twilioAuthToken)
@@ -50,6 +51,7 @@ def index():
 
 @app.route("/notifier", methods=["GET", "POST"])
 def notify():
+    print(request)
     if request.method == "POST":
         # creates an authorization object using environment variables
         tableauAuth = TSC.PersonalAccessTokenAuth(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PASSWORD"], env_dict["TABLEAU_SITENAME"])
@@ -63,7 +65,7 @@ def notify():
           with server.auth.sign_in(tableauAuth):
             allDatasources, PaginationItem = server.datasources.get()
             # append each 
-            logFile.write(f"{current_time}: There are {PaginationItem.total_available} datasources on site\n")
+            logFile.write(f"\n{current_time}: There are {PaginationItem.total_available} datasources on site\n")
         
             # loop through datasources on site to output an individual detail
             for dataSource in allDatasources:
@@ -71,6 +73,7 @@ def notify():
               msgStr = f"Datasource Refresh failed\n\tName:{dataSource.name}\n\tDescription:{dataSource.description}\n\tLast updated: {dataSource.updated_at}\n"
               logFile.write(msgStr)
 
+              # implementing SMS, WhatsApp and Phone call Twilio services along with logs
               textMessage = twilioClient.messages.create(
                 body = msgStr,
                 from_ = fromNumber,
