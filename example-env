@@ -1,0 +1,10 @@
+TABLEAU_PAT_NAME=your-token-name
+TABLEAU_PASSWORD=your-token-password
+TABLEAU_SITENAME=your-sitename
+TABLEAU_SERVER=your-tableau-server-online-domain
+TWILIO_ACCOUNT_SID=your-twilio-account
+TWILIO_AUTH_TOKEN=your-twilio-token
+TWILIO_FROM_NUMBER=+1your-twilio-number
+TWILIO_TO_NUMBER=+1your-number
+WHATSAPP_FROM=whatsapp:+1your-twilio-whatsappsandbox-number
+WHATSAPP_TO=whatsapp:+1your-whatsapp-number
