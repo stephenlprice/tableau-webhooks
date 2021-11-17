@@ -11,6 +11,26 @@ The app is capable of sending SMS, WhatsApp and perform phone calls when certain
 
 ## Dependencies
 
-This project 
+This project was built with [Anaconda](https://www.anaconda.com/), therefore the development environment can be cloned from the `environment.yml` file. Most dependencies are installed with `conda` while the last three are installed with `pip3`.
+
+```yaml
+name: tableau-twilio
+channels:
+  - defaults
+dependencies:
+  - python=3.8.8
+  - flask=2.0.2
+  - gunicorn=20.1.0
+  - pip=21.2.4
+  - pip:
+    - python-dotenv==0.19.2
+    - twilio==7.3.0
+    - tableauserverclient==0.17.0
+prefix: /Users/stephenlprice/anaconda3/envs/tableau-twilio
+```
+
+## Environment Variables
+
+
 
 
