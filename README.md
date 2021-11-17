@@ -79,12 +79,18 @@ curl "http://127.0.0.1:8000/notifier" -X POST
 
 ## Deployment
 
+![production deployment](assets/images/flask-gunicorn.png)
+##### *source: [Medium: Configuring heroku-based nginx and gunicorn to serve static content and to pass requests directly to the app](https://eserdk.medium.com/heroku-nginx-gunicorn-flask-f10e81aca90d)*
+
+</br>
+
 The app is setup for deployment on [Heroku](https://heroku.com/) using a free dyno (database no required). Deployment to this platform has a few requirements:
 
 - [ ] Free [Heroku](https://heroku.com/) account
 - [ ] The [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 - [ ] An `environment.yml` file
 - [ ] A `Procfile`
+- [ ] Heroku buildpacks for [conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python)
 
 
 
