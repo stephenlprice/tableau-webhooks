@@ -118,8 +118,6 @@ The app is setup for deployment on [Heroku](https://heroku.com/) using a free dy
 - An `environment.yml` or `requirements.txt` file
 - A `Procfile`
 - Heroku buildpacks for [conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python)
-  
-</br>
 
 ### Deployment Steps
 
@@ -147,7 +145,8 @@ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-python.git
 web: gunicorn notifier:app
 ```
 4. Projects using `conda` environments can use the provided `environment.yml` file, otherwise you will have to create a `requirements.txt` file to install [python dependencies on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#declare-app-dependencies)
-5. Deploy [code to Heroku](https://devcenter.heroku.com/articles/git#deploying-code) 
+5. Add all of the environment variables listed in the `example-env` file to the Heroku app's settings under "config vars" (this is done on the website)
+6. Deploy [code to Heroku](https://devcenter.heroku.com/articles/git#deploying-code) 
 ```bash
 git push heroku main
 ```
