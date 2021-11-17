@@ -9,6 +9,17 @@ The app is capable of sending SMS, WhatsApp and perform phone calls when certain
 
 </br>
 
+## Requirements
+
+This list covers requirements for local development and deployment to Heroku
+
+- [Python](https://www.python.org/) version 3.8.8
+- [Anaconda](https://www.anaconda.com/) (optional but recommended)
+- Tableau Server or Tableau Online site (a developer site is available for free by signing up for the [developer program](https://www.tableau.com/developer))
+- Authencation for Tableau is done via PAT (personal access token) see the documentation for the [Webhooks API](https://help.tableau.com/current/developer/webhooks/en-us/)
+- Twilio account providing a phone number (a trial account is enough)
+- [Twilio WhatsApp Sandbox](https://www.google.com/url?q=https://www.twilio.com/console/messaging/whatsapp/sandbox) (obtained on the Twilio console)
+
 ## Installation
 
 1. Clone this repository
@@ -26,10 +37,18 @@ conda env create -f environment.yml
 # activates the environment
 conda activate tableau-twilio
 ```
-##### Note: if you are not using `conda` you can create a `requirements.txt` file or install dependencies manually with `pip3`.
+##### *Note: if you are not using `conda` you can create a `requirements.txt` file or install dependencies manually with `pip3`.*
 </br>
 
-3. Run the app locally with gunicorn
+3. Create a `.env` file in the project's root directory and add values for each environment variable described in the [example file](#environment-variables) (`example-env`)
+```bash
+# create the .env file
+touch .env
+```
+##### *Note: the server will have a `RuntimeError` if these environment variables are not accessible.*
+</br>
+
+4. Run the app locally with gunicorn
 ```bash
 # $(MODULE_NAME) is notifier and $(VARIABLE_NAME) is app (see notifier.py)
 gunicorn notifier:app
@@ -132,6 +151,7 @@ heroku git:remote -a your-app-name
 # confirm that a Heroku remote is tracking the repo
 git remote -v
 ```
+
 2. Add a buildpack to this Heroku app ([conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python))
 ```bash
 # conda buildpack (community built)
@@ -140,12 +160,18 @@ heroku buildpacks:set https://github.com/pl31/heroku-buildpack-conda.git
 # python buildpack (offical buildpack)
 heroku buildpacks:set https://github.com/heroku/heroku-buildpack-python.git
 ```
+
 3. The existing `Procfile` runs the command launch a "web" dyno on Heroku
 ```bash
 web: gunicorn notifier:app
 ```
+
 4. Projects using `conda` environments can use the provided `environment.yml` file, otherwise you will have to create a `requirements.txt` file to install [python dependencies on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#declare-app-dependencies)
-5. Add all of the environment variables listed in the `example-env` file to the Heroku app's settings under "config vars" (this is done on the website)
+
+5. Add all of the [environment variables](#environment-variables) listed in the `example-env` file to the Heroku app's settings under "config vars" (this is done on the website)
+##### *Note: the server will have a `RuntimeError` if these environment variables are not accessible.*
+</br>
+
 6. Deploy [code to Heroku](https://devcenter.heroku.com/articles/git#deploying-code) 
 ```bash
 git push heroku main
