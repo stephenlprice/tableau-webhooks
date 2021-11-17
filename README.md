@@ -1,4 +1,4 @@
-# Tableau & Twilio via Webhooks
+# Tableau Webhooks & Twilio
 
 A project demonstrating the use of Tableau's [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) and [Twilio](https://www.twilio.com/) to send notifications to a site or server administrator upon failed data source refreshes.
 
@@ -8,6 +8,32 @@ The app is capable of sending SMS, WhatsApp and perform phone calls when certain
 ##### *source: [CleverTap: What Are Webhooks? And Why Should You Get Hooked?](https://clevertap.com/blog/what-are-webhooks/)*
 
 </br>
+
+## Installation
+
+1. Clone this repository
+```bash
+git clone https://github.com/stephenlprice/tableau-twilio-webhooks.git
+
+# navigate inside the project directory
+cd tableau-twilio-webhooks
+```
+2. Create a `conda` environment to install all dependencies and activate it
+```bash
+# will create an environment called tableau-twilio
+conda env create -f environment.yml
+
+# activates the environment
+conda activate tableau-twilio
+```
+##### Note: if you are not using `conda` you can create a `requirements.txt` file or install dependencies manually with `pip3`.
+</br>
+
+3. Run the app locally with gunicorn
+```bash
+# $(MODULE_NAME) is notifier and $(VARIABLE_NAME) is app (see notifier.py)
+gunicorn notifier:app
+```
 
 ## Dependencies
 
@@ -39,7 +65,7 @@ To protect private data such as phone numbers and Tableau passwords, this projec
 
 **tldr**: create a `.env` file using the example-env file provided with the repo. `python-dotenv` will load these variables into `notifier.py` to be used in the app.
 
-```.env
+```bash
 TABLEAU_PAT_NAME=your-token-name
 TABLEAU_PASSWORD=your-token-password
 TABLEAU_SITENAME=your-sitename
@@ -59,6 +85,7 @@ The app was built in [Python](https://www.python.org/) using the [Flask](https:/
 To start the server with `gunicorn` you can run this command:
 
 ```bash
+# $(MODULE_NAME) is notifier and $(VARIABLE_NAME) is app (see notifier.py)
 gunicorn notifier:app
 ```
 
@@ -84,18 +111,43 @@ curl "http://127.0.0.1:8000/notifier" -X POST
 
 </br>
 
-The app is setup for deployment on [Heroku](https://heroku.com/) using a free dyno (database no required). Deployment to this platform has a few requirements:
+The app is setup for deployment on [Heroku](https://heroku.com/) using a free dyno (database not required). Deployment to this platform has a few requirements:
 
-- [ ] Free [Heroku](https://heroku.com/) account
-- [ ] The [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
-- [ ] An `environment.yml` file
-- [ ] A `Procfile`
-- [ ] Heroku buildpacks for [conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python)
+- Free [Heroku](https://heroku.com/) account
+- Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+- An `environment.yml` or `requirements.txt` file
+- A `Procfile`
+- Heroku buildpacks for [conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python)
+  
+</br>
 
+### Deployment Steps
 
+1. Add a [Heroku remote](https://devcenter.heroku.com/articles/git#creating-a-heroku-remote) (track this git repo on a Heroku app)
+```bash
+# creates a new app (declare a name or it will be randomly named)
+heroku create your-app-name
 
+# add an existing Heroku remote to the git repo
+heroku git:remote -a your-app-name
 
+# confirm that a Heroku remote is tracking the repo
+git remote -v
+```
+2. Add a buildpack to this Heroku app ([conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python))
+```bash
+# conda buildpack (community built)
+heroku buildpacks:set https://github.com/pl31/heroku-buildpack-conda.git
 
-
-
-
+# python buildpack (offical buildpack)
+heroku buildpacks:set https://github.com/heroku/heroku-buildpack-python.git
+```
+3. The existing `Procfile` runs the command launch a "web" dyno on Heroku
+```bash
+web: gunicorn notifier:app
+```
+4. Projects using `conda` environments can use the provided `environment.yml` file, otherwise you will have to create a `requirements.txt` file to install [python dependencies on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#declare-app-dependencies)
+5. Deploy [code to Heroku](https://devcenter.heroku.com/articles/git#deploying-code) 
+```bash
+git push heroku main
+```
