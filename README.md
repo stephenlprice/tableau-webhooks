@@ -52,6 +52,42 @@ WHATSAPP_FROM=whatsapp:+1your-twilio-whatsappsandbox-number
 WHATSAPP_TO=whatsapp:+1your-whatsapp-number
 ```
 
+## Local Usage
+
+The app was built in [Python](https://www.python.org/) using the [Flask](https://palletsprojects.com/p/flask/) micro web framework. `Flask` can be run on it's own for development purposes however, this is not recommended for production and instead a WSGI server such as [gunicorn](https://gunicorn.org/) is required.
+
+To start the server with `gunicorn` you can run this command:
+
+```bash
+gunicorn notifier:app
+```
+
+As a result `gunicorn` will log activity made to the app's endpoints and will be available at: 
+
+```bash
+# API index
+http://127.0.0.1:8000
+# the endpoint used for notifications
+http://127.0.0.1:8000/notifier
+```
+
+You can trigger Twilio notifications by making a POST request to the `/notifier` endpoint such as:
+
+```bash
+curl "http://127.0.0.1:8000/notifier" -X POST
+```
+
+## Deployment
+
+The app is setup for deployment on [Heroku](https://heroku.com/) using a free dyno (database no required). Deployment to this platform has a few requirements:
+
+- [ ] Free [Heroku](https://heroku.com/) account
+- [ ] The [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+- [ ] An `environment.yml` file
+- [ ] A `Procfile`
+
+
+
 
 
 
