@@ -97,7 +97,6 @@ def notify():
 
         return "200 SUCCESS"
 
-
     else:
       # GET requests redirects to index "/" to display a list of supported API endpoints
       return redirect(url_for("index"))
