@@ -5,6 +5,7 @@ dependencies:
   - python=3.8.8
   - flask=2.0.2
   - gunicorn=20.1.0
+  - nginx=1.19.10
   - pip=21.2.4
   - pip:
     - python-dotenv==0.19.2
