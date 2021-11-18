@@ -4,8 +4,9 @@ A project demonstrating the use of Tableau's [Webhooks API](https://www.tableau.
 
 The app is capable of sending SMS, WhatsApp and perform phone calls when certain events take place on a Tableau Server or Tableau Online site.
 
-![webhook description](assets/images/webhooks-vs-apis.png)
-##### *source: [CleverTap: What Are Webhooks? And Why Should You Get Hooked?](https://clevertap.com/blog/what-are-webhooks/)*
+</br>
+
+![tableau + twilio](assets/images/tableau+twilio.png)
 
 </br>
 
