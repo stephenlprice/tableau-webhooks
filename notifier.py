@@ -58,7 +58,7 @@ def notify():
         # server object using environment variables
         server = TSC.Server(env_dict["TABLEAU_SERVER"])
         # append response data to log.txt
-        with open("log.txt", "a") as logFile:
+        with open("./logs/log.txt", "a") as logFile:
           # using now() to get current time for timestamp
           current_time = datetime.datetime.now()
           # server object signs in and fetches a list of datasources
