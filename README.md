@@ -17,9 +17,10 @@ This list covers requirements for local development and deployment to Heroku
 - [Python](https://www.python.org/) version 3.8.8
 - [Anaconda](https://www.anaconda.com/) (optional but recommended)
 - Tableau Server or Tableau Online site (a developer site is available for free by signing up for the [developer program](https://www.tableau.com/developer))
-- Authencation for Tableau is done via PAT (personal access token) see the documentation for the [Webhooks API](https://help.tableau.com/current/developer/webhooks/en-us/)
-- Twilio account providing a phone number (a trial account is enough)
+- Authentication for Tableau is done via PAT (personal access token) see the documentation for the [Webhooks API](https://help.tableau.com/current/developer/webhooks/en-us/)
+- [Twilio](https://www.twilio.com/) account providing a phone number (a trial account is enough)
 - [Twilio WhatsApp Sandbox](https://www.google.com/url?q=https://www.twilio.com/console/messaging/whatsapp/sandbox) (obtained on the Twilio console)
+- [Postman](https://www.postman.com/) to make request to the [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) (optional)
 
 ## Installation
 
@@ -123,6 +124,14 @@ You can trigger Twilio notifications by making a POST request to the `/notifier`
 ```bash
 curl "http://127.0.0.1:8000/notifier" -X POST
 ```
+
+## Postman Collection
+
+![postman logo](assets/images/postman.png)
+
+This repository contains a [Postman](https://www.postman.com/) collection and environment file to help you interact with [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) which is available on either Tableau Server or Tableau Online (*[see requirements](#requirements)*).
+
+To make requests to Tableau's RESTful endpoints 
 
 ## Deployment
 
