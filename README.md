@@ -129,9 +129,23 @@ curl "http://127.0.0.1:8000/notifier" -X POST
 
 ![postman logo](assets/images/postman.png)
 
-This repository contains a [Postman](https://www.postman.com/) collection and environment file to help you interact with [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) which is available on either Tableau Server or Tableau Online (*[see requirements](#requirements)*).
+This repository contains a [Postman](https://www.postman.com/) collection and environment file to help you interact with [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) which is available on either Tableau Server or Tableau Online (*[see requirements](#requirements)*). 
 
-To make requests to Tableau's RESTful endpoints 
+Once you have added a webhook to the Tableau site or server, you can test it using the `test` request provided in the collection. It is also useful to get a `list` of webhooks registered on the server to get the ID of a webhook that you wish to test.
+
+### Environment file
+
+The collection was built to leverage the provided environment file which will store useful information such as credentials and URLs as well as allowing scripts to update variables for you automatically.
+
+> __WARNING__: Do not push usernames, passwords or personal access tokens to Github as they will be accessible by crawlers and is a well known security risk.
+>
+> You can fork environment files for local use and keep an empty template available on the repository for others to use.
+
+### Authentication
+
+To make requests to Tableau's RESTful endpoints you will need to authenticate by way of a username & password or via PAT (personal access token) to obtain an `API key` that allows users to make requests to other endpoints. 
+
+The collection has a `prerequest script` that will automatically run an authentication request every time you make any other request and therefore saves you from having to do this manually. This functionality requires that you provide username, password and PAT values in the provided environment file.
 
 ## Deployment
 
