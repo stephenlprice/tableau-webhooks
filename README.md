@@ -137,9 +137,8 @@ Once you have added a webhook to the Tableau site or server, you can test it usi
 
 The collection was built to leverage the provided environment file which will store useful information such as credentials and URLs as well as allowing scripts to update variables for you automatically.
 
-> __WARNING__: Do not push usernames, passwords or personal access tokens to Github as they will be accessible by crawlers and is a well known security risk.
->
-> You can fork environment files for local use and keep an empty template available on the repository for others to use.
+> ##### *__WARNING__: Do not push usernames, passwords or personal access tokens to Github as they will be accessible by crawlers and is a well known security risk. You can fork environment files for local use and keep an empty template available on the repository for others to use.*
+</br>
 
 ### Authentication
 
