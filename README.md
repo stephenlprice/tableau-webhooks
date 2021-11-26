@@ -39,10 +39,10 @@ conda env create -f environment.yml
 # activates the environment
 conda activate tableau-twilio
 ```
-##### *Note: if you are not using `conda` you can create a `requirements.txt` file or install dependencies manually with `pip3`.*
+> ##### *__NOTE__: if you are not using `conda` you can create a `requirements.txt` file or install dependencies manually with `pip3`.*
 </br>
 
-3. Create a `.env` file in the project's root directory and add values for each environment variable described in the [example file](#environment-variables) (`example-env`)
+1. Create a `.env` file in the project's root directory and add values for each environment variable described in the [example file](#environment-variables) (`example-env`)
 ```bash
 # create the .env file
 touch .env
@@ -192,7 +192,8 @@ web: gunicorn notifier:app
 4. Projects using `conda` environments can use the provided `environment.yml` file, otherwise you will have to create a `requirements.txt` file to install [python dependencies on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#declare-app-dependencies)
 
 5. Add all of the [environment variables](#environment-variables) listed in the `example-env` file to the Heroku app's settings under "config vars" (this is done on the website)
-##### *Note: the server will have a `RuntimeError` if these environment variables are not accessible.*
+   
+> ##### *__Note__: the server will have a `RuntimeError` if these environment variables are not accessible.*
 </br>
 
 6. Deploy [code to Heroku](https://devcenter.heroku.com/articles/git#deploying-code) 
