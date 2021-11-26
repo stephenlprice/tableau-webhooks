@@ -4,9 +4,23 @@ A project demonstrating the use of Tableau's [Webhooks API](https://www.tableau.
 
 The app is capable of sending SMS, WhatsApp and perform phone calls when certain events take place on a Tableau Server or Tableau Online site.
 
+![tableau + twilio](assets/images/tableau+twilio.png)
+
 </br>
 
-![tableau + twilio](assets/images/tableau+twilio.png)
+## Table of Contents
+- [Tableau Webhooks & Twilio](#tableau-webhooks--twilio)
+  - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Dependencies](#dependencies)
+  - [Environment Variables](#environment-variables)
+  - [Local Usage](#local-usage)
+  - [Postman Collection](#postman-collection)
+    - [Environment file](#environment-file)
+    - [Authentication](#authentication)
+  - [Deployment](#deployment)
+    - [Steps](#steps)
 
 </br>
 
@@ -21,6 +35,8 @@ This list covers requirements for local development and deployment to Heroku
 - [Twilio](https://www.twilio.com/) account providing a phone number (a trial account is enough)
 - [Twilio WhatsApp Sandbox](https://www.google.com/url?q=https://www.twilio.com/console/messaging/whatsapp/sandbox) (obtained on the Twilio console)
 - [Postman](https://www.postman.com/) to make request to the [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) (optional)
+
+</br>
 
 ## Installation
 
@@ -56,6 +72,8 @@ touch .env
 gunicorn notifier:app
 ```
 
+</br>
+
 ## Dependencies
 
 This project was built with [Anaconda](https://www.anaconda.com/), therefore the development environment can be cloned from the `environment.yml` file. Most dependencies are installed with `conda` while the last three are installed with `pip3`. 
@@ -80,6 +98,8 @@ prefix: /Users/stephenlprice/anaconda3/envs/tableau-twilio
 
 It is possible to recreate this environment without Anaconda, using something like [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/). In that case you can install all dependencies with `pip3` and write a `requirements.txt` file to document your dependencies.
 
+</br>
+
 ## Environment Variables
 
 To protect private data such as phone numbers and Tableau passwords, this project relies on `environment variables` to store this information without pushing them to the public Github repository (via `.gitignore`). If you are new to this concept I highly recommend that you read [Twilio's blog post](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) on the subject.
@@ -98,6 +118,8 @@ TWILIO_TO_NUMBER=+1your-number
 WHATSAPP_FROM=whatsapp:+1your-twilio-whatsappsandbox-number
 WHATSAPP_TO=whatsapp:+1your-whatsapp-number
 ```
+
+</br>
 
 ## Local Usage
 
@@ -125,6 +147,8 @@ You can trigger Twilio notifications by making a POST request to the `/notifier`
 curl "http://127.0.0.1:8000/notifier" -X POST
 ```
 
+</br>
+
 ## Postman Collection
 
 ![postman logo](assets/images/postman.png)
@@ -146,10 +170,12 @@ To make requests to Tableau's RESTful endpoints you will need to authenticate by
 
 The collection has a `prerequest script` that will automatically run an authentication request every time you make any other request and therefore saves you from having to do this manually. This functionality requires that you provide username, password and PAT values in the provided environment file.
 
+</br>
+
 ## Deployment
 
 ![production deployment](assets/images/flask-gunicorn.png)
-##### *source: [Medium: Configuring heroku-based nginx and gunicorn to serve static content and to pass requests directly to the app](https://eserdk.medium.com/heroku-nginx-gunicorn-flask-f10e81aca90d)*
+<h6><i><strong>Source</strong>: <a href="https://eserdk.medium.com/heroku-nginx-gunicorn-flask-f10e81aca90d">Medium: Configuring heroku-based nginx and gunicorn to serve static content and to pass requests directly to the app</a></i></h6>
 
 </br>
 
@@ -161,7 +187,7 @@ The app is setup for deployment on [Heroku](https://heroku.com/) using a free dy
 - A `Procfile`
 - Heroku buildpacks for [conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python)
 
-### Deployment Steps
+### Steps
 
 1. Add a [Heroku remote](https://devcenter.heroku.com/articles/git#creating-a-heroku-remote) (track this git repo on a Heroku app)
 ```bash
@@ -193,7 +219,7 @@ web: gunicorn notifier:app
 
 5. Add all of the [environment variables](#environment-variables) listed in the `example-env` file to the Heroku app's settings under "config vars" (this is done on the website)
    
-> ##### *__Note__: the server will have a `RuntimeError` if these environment variables are not accessible.*
+> ##### *__NOTE__: the server will have a `RuntimeError` if these environment variables are not accessible.*
 </br>
 
 6. Deploy [code to Heroku](https://devcenter.heroku.com/articles/git#deploying-code) 
