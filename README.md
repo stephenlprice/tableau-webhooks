@@ -47,10 +47,10 @@ conda activate tableau-twilio
 # create the .env file
 touch .env
 ```
-##### *Note: the server will have a `RuntimeError` if these environment variables are not accessible.*
+> ##### *__NOTE__: the server will have a `RuntimeError` if these environment variables are not accessible.*
 </br>
 
-4. Run the app locally with gunicorn
+1. Run the app locally with gunicorn
 ```bash
 # $(MODULE_NAME) is notifier and $(VARIABLE_NAME) is app (see notifier.py)
 gunicorn notifier:app
