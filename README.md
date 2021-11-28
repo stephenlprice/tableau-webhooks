@@ -101,7 +101,31 @@ WHATSAPP_TO=whatsapp:+1your-whatsapp-number
 
 ## Local Usage
 
-The app was built in [Python](https://www.python.org/) using the [Flask](https://palletsprojects.com/p/flask/) micro web framework. `Flask` can be run on it's own for development purposes however, this is not recommended for production and instead a WSGI server such as [gunicorn](https://gunicorn.org/) is required. Additionally, [nginx](https://nginx.org/en/docs/beginners_guide.html) provides a proxy server allowing users to establish an allowlist of URLS that can execute actions on the Flask server via `http` requests. 
+The app was built in [Python](https://www.python.org/) using the [Flask](https://palletsprojects.com/p/flask/) micro web framework. `Flask` can be run on it's own for development purposes however, this is not recommended for production and instead a WSGI server such as [gunicorn](https://gunicorn.org/) is required. Additionally, [nginx](https://nginx.org/en/docs/beginners_guide.html) provides a proxy server allowing users to establish an allowlist of URLS that can execute actions on the Flask server via `http` requests.
+
+### nginx
+
+For local testing you will need to be familiar with [basic nginx commands](https://nginx.org/en/docs/beginners_guide.html#control) such as:
+
+```nginx
+# to start nginx run the executable
+nginx
+
+# to shutdown or reload the server use this pattern: 
+# nginx -s signal
+
+# fast shutdown
+nginx -s stop
+
+# graceful shutdown
+nginx -s quit
+
+# reload the configuration file
+nginx -s reload
+
+# reopen log files
+nginx -s reopen
+```
 
 To start the server with `gunicorn` you can run this command:
 
