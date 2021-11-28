@@ -69,6 +69,7 @@ dependencies:
   - python=3.8.8
   - flask=2.0.2
   - gunicorn=20.1.0
+  - nginx=1.19.10
   - pip=21.2.4
   - pip:
     - python-dotenv==0.19.2
@@ -100,7 +101,7 @@ WHATSAPP_TO=whatsapp:+1your-whatsapp-number
 
 ## Local Usage
 
-The app was built in [Python](https://www.python.org/) using the [Flask](https://palletsprojects.com/p/flask/) micro web framework. `Flask` can be run on it's own for development purposes however, this is not recommended for production and instead a WSGI server such as [gunicorn](https://gunicorn.org/) is required.
+The app was built in [Python](https://www.python.org/) using the [Flask](https://palletsprojects.com/p/flask/) micro web framework. `Flask` can be run on it's own for development purposes however, this is not recommended for production and instead a WSGI server such as [gunicorn](https://gunicorn.org/) is required. Additionally, [nginx](https://nginx.org/en/docs/beginners_guide.html) provides a proxy server allowing users to establish an allowlist of URLS that can execute actions on the Flask server via `http` requests. 
 
 To start the server with `gunicorn` you can run this command:
 
