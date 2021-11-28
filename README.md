@@ -97,6 +97,7 @@ TWILIO_FROM_NUMBER=+1your-twilio-number
 TWILIO_TO_NUMBER=+1your-number
 WHATSAPP_FROM=whatsapp:+1your-twilio-whatsappsandbox-number
 WHATSAPP_TO=whatsapp:+1your-whatsapp-number
+URL_ALLOWLIST=tableau-server-or-online-site-url
 ```
 
 ## Local Usage
