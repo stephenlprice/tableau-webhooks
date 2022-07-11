@@ -49,7 +49,7 @@ git clone https://github.com/stephenlprice/tableau-webhooks.git
 # navigate inside the project directory
 cd tableau-webhooks
 ```
-2. Create a `conda` environment to install all dependencies and activate it (See [Dependencies](##Dependencies) for more info.)
+1. Create a `conda` environment to install all dependencies and activate it (See [Dependencies](#dependencies) for more info.)
 ```bash
 # will create an environment called tableau-webhooks
 conda env create -f environment.yml
@@ -103,7 +103,7 @@ It is possible to recreate this environment without Anaconda, using something li
 
 ## Environment Variables
 
-To protect private data such as phone numbers and Tableau passwords, this project relies on `environment variables` to store this information without pushing them to the public Github repository (via `.gitignore`). If you are new to this concept I highly recommend that you read [Twilio's blog post](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) on the subject.
+To protect private data such as phone numbers and passwords, this project relies on `environment variables` to store this information without pushing them to the public Github repository (via `.gitignore`). If you are new to this concept I highly recommend that you read [Twilio's blog post](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) on the subject.
 
 **tldr**: create a `.env` file using the example-env file provided with the repo. `python-dotenv` will load these variables into `notifier.py` to be used in the app.
 
@@ -124,7 +124,7 @@ WHATSAPP_TO=whatsapp:+1your-whatsapp-number
 
 ## Local Usage
 
-The app was built in [Python](https://www.python.org/) using the [Flask](https://palletsprojects.com/p/flask/) micro web framework. `Flask` can be run on it's own for development purposes however, this is not recommended for production and instead a WSGI server such as [gunicorn](https://gunicorn.org/) is required.
+The app was built in [Python](https://www.python.org/) using the [Flask](https://palletsprojects.com/p/flask/) micro web framework. `Flask` can run on it's own for development purposes however, this is not recommended for production and instead a WSGI server such as [gunicorn](https://gunicorn.org/) is required.
 
 To start the server with `gunicorn` you can run this command:
 
@@ -160,7 +160,7 @@ Once you have added a webhook to the Tableau site or server, you can test it usi
 
 ### Environment file
 
-The collection was built to leverage the provided environment file which will store useful information such as credentials and URLs as well as allowing scripts to update variables for you automatically.
+The Postman collection was built to leverage the provided environment file which will store useful information such as credentials and URLs as well as allowing scripts to update variables for you automatically.
 
 > ##### *__WARNING__: Do not push usernames, passwords or personal access tokens to Github as they will be accessible by crawlers and is a well known security risk. You can fork environment files for local use and keep an empty template available on the repository for others to use.*
 </br>
