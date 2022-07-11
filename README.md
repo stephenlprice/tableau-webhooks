@@ -49,7 +49,7 @@ git clone https://github.com/stephenlprice/tableau-webhooks.git
 # navigate inside the project directory
 cd tableau-webhooks
 ```
-2. Create a `conda` environment to install all dependencies and activate it
+2. Create a `conda` environment to install all dependencies and activate it (See [Dependencies](##Dependencies) for more info.)
 ```bash
 # will create an environment called tableau-webhooks
 conda env create -f environment.yml
@@ -60,7 +60,7 @@ conda activate tableau-webhooks
 > ##### *__NOTE__: if you are not using `conda` you can create a `requirements.txt` file or install the dependencies listed in the `environment.yml` file manually with `pip3`.*
 </br>
 
-1. Create a `.env` file in the project's root directory and add values for each environment variable described in the [example file](#environment-variables) (`example-env`)
+3. Create a `.env` file in the project's root directory and add values for each environment variable described in the [example file](#environment-variables) (`example-env`)
 ```bash
 # create the .env file
 touch .env
@@ -68,7 +68,7 @@ touch .env
 > ##### *__NOTE__: the server will have a `RuntimeError` if these environment variables are not accessible.*
 </br>
 
-1. Run the app locally with gunicorn
+4. Run the app locally with gunicorn
 ```bash
 # $(MODULE_NAME) is notifier and $(VARIABLE_NAME) is app (see notifier.py)
 gunicorn notifier:app
@@ -83,7 +83,7 @@ This project was built with [Anaconda](https://www.anaconda.com/), therefore the
 If you are new to `conda` I recommend keeping the [conda cheatsheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf) nearby for reference.
 
 ```yaml
-name: tableau-twilio
+name: tableau-webhooks
 channels:
   - defaults
 dependencies:
@@ -95,7 +95,6 @@ dependencies:
     - python-dotenv==0.19.2
     - twilio==7.3.0
     - tableauserverclient==0.17.0
-prefix: /Users/stephenlprice/anaconda3/envs/tableau-twilio
 ```
 
 It is possible to recreate this environment without Anaconda, using something like [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/). In that case you can install all dependencies with `pip3` and write a `requirements.txt` file to document your dependencies.
