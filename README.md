@@ -1,15 +1,15 @@
-# Tableau Webhooks & Twilio
+# Tableau Webhooks
 
-A project demonstrating the use of Tableau's [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) and [Twilio](https://www.twilio.com/) to send notifications to a site or server administrator upon failed data source refreshes.
+A project demonstrating the use of Tableau's [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) to orchestrate processes dependent on Tableau events and incorporates [Twilio](https://www.twilio.com/) to send notifications to a site or server administrator upon failed data refreshes.
 
-The app is capable of sending SMS, WhatsApp and perform phone calls when certain events take place on a Tableau Server or Tableau Online site.
+The app is capable of making REST API calls to Tableau after an event takes place as well as sending SMS, WhatsApp and perform phone calls when a data source or workbook fails to refresh.
 
 ![tableau + twilio](assets/images/tableau+twilio.png)
 
 </br>
 
 ## Table of Contents
-- [Tableau Webhooks & Twilio](#tableau-webhooks--twilio)
+- [Tableau Webhooks](#tableau-webhooks)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Installation](#installation)
@@ -32,9 +32,9 @@ This list covers requirements for local development and deployment to Heroku
 - [Anaconda](https://www.anaconda.com/) (optional but recommended)
 - Tableau Server or Tableau Online site (a developer site is available for free by signing up for the [developer program](https://www.tableau.com/developer))
 - Authentication for Tableau is done via PAT (personal access token) see the documentation for the [Webhooks API](https://help.tableau.com/current/developer/webhooks/en-us/)
-- [Twilio](https://www.twilio.com/) account providing a phone number (a trial account is enough)
+- [Twilio](https://www.twilio.com/) account providing a phone number, this is only needed if you want to receive notifications (a trial account is enough)
 - [Twilio WhatsApp Sandbox](https://www.google.com/url?q=https://www.twilio.com/console/messaging/whatsapp/sandbox) (obtained on the Twilio console)
-- [Postman](https://www.postman.com/) to make request to the [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) (optional)
+- [Postman](https://www.postman.com/) to make requests to the [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) (optional)
 
 </br>
 
@@ -49,11 +49,11 @@ cd tableau-twilio-webhooks
 ```
 2. Create a `conda` environment to install all dependencies and activate it
 ```bash
-# will create an environment called tableau-twilio
+# will create an environment called tableau-webhooks
 conda env create -f environment.yml
 
 # activates the environment
-conda activate tableau-twilio
+conda activate tableau-webhooks
 ```
 > ##### *__NOTE__: if you are not using `conda` you can create a `requirements.txt` file or install dependencies manually with `pip3`.*
 </br>

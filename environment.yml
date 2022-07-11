@@ -1,4 +1,4 @@
-name: tableau-twilio
+name: tableau-webhooks
 channels:
   - defaults
 dependencies:
@@ -10,4 +10,3 @@ dependencies:
     - python-dotenv==0.19.2
     - twilio==7.3.0
     - tableauserverclient==0.17.0
-prefix: /Users/stephenlprice/anaconda3/envs/tableau-twilio
