@@ -49,7 +49,7 @@ git clone https://github.com/stephenlprice/tableau-webhooks.git
 # navigate inside the project directory
 cd tableau-webhooks
 ```
-1. Create a `conda` environment to install all dependencies and activate it (See [Dependencies](#dependencies) for more info.)
+1. Create a `conda` environment to install all dependencies and activate it (see [Dependencies](#dependencies) for more info.)
 ```bash
 # will create an environment called tableau-webhooks
 conda env create -f environment.yml
