@@ -1,4 +1,4 @@
-name: tableau-twilio
+name: tableau-webhooks
 channels:
   - defaults
 dependencies:
