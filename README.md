@@ -32,7 +32,7 @@ This list covers requirements for local development and deployment to Heroku
 - [Anaconda](https://www.anaconda.com/) (optional but recommended)
 - Tableau Server or Tableau Online site (a developer site is available for free by signing up for the [developer program](https://www.tableau.com/developer))
 - Authentication for Tableau is done via PAT (personal access token) see the documentation for the [Webhooks API](https://help.tableau.com/current/developer/webhooks/en-us/)
-- [Twilio](https://www.twilio.com/) account providing a phone number (a trial account is enough)
+- [Twilio](https://www.twilio.com/) account providing a phone number, this is only needed if you want to receive notifications (a trial account is enough)
 - [Twilio WhatsApp Sandbox](https://www.google.com/url?q=https://www.twilio.com/console/messaging/whatsapp/sandbox) (obtained on the Twilio console)
 - [Postman](https://www.postman.com/) to make requests to the [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) (optional)
 
