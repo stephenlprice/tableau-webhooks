@@ -26,10 +26,10 @@ The app is capable of making REST API calls to Tableau after an event takes plac
 
 ## Requirements
 
-This list covers requirements for local development and deployment to Heroku
+This list covers requirements for local development and deployment to Heroku (note that you are free to deploy this server on other platforms).
 
 - [Python](https://www.python.org/) version 3.8.8
-- [Anaconda](https://www.anaconda.com/) (optional but recommended)
+- [Anaconda](https://www.anaconda.com/) or some other Python environment manager (optional but recommended)
 - Tableau Server or Tableau Online site (a developer site is available for free by signing up for the [developer program](https://www.tableau.com/developer))
 - Authentication for Tableau is done via PAT (personal access token) see the documentation for the [Webhooks API](https://help.tableau.com/current/developer/webhooks/en-us/)
 - [Twilio](https://www.twilio.com/) account providing a phone number, this is only needed if you want to receive notifications (a trial account is enough)
@@ -42,10 +42,12 @@ This list covers requirements for local development and deployment to Heroku
 
 1. Clone this repository
 ```bash
-git clone https://github.com/stephenlprice/tableau-twilio-webhooks.git
+git clone git@github.com:stephenlprice/tableau-webhooks.git
+# or
+git clone https://github.com/stephenlprice/tableau-webhooks.git
 
 # navigate inside the project directory
-cd tableau-twilio-webhooks
+cd tableau-webhooks
 ```
 2. Create a `conda` environment to install all dependencies and activate it
 ```bash
@@ -55,7 +57,7 @@ conda env create -f environment.yml
 # activates the environment
 conda activate tableau-webhooks
 ```
-> ##### *__NOTE__: if you are not using `conda` you can create a `requirements.txt` file or install dependencies manually with `pip3`.*
+> ##### *__NOTE__: if you are not using `conda` you can create a `requirements.txt` file or install the dependencies listed in the `environment.yml` file manually with `pip3`.*
 </br>
 
 1. Create a `.env` file in the project's root directory and add values for each environment variable described in the [example file](#environment-variables) (`example-env`)
