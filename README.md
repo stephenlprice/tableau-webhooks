@@ -1,15 +1,15 @@
-# Tableau Webhooks & Twilio
+# Tableau Webhooks
 
-A project demonstrating the use of Tableau's [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) and [Twilio](https://www.twilio.com/) to send notifications to a site or server administrator upon failed data source refreshes.
+A project demonstrating the use of Tableau's [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) to orchestrate processes dependent on Tableau events and incorporates [Twilio](https://www.twilio.com/) to send notifications to a site or server administrator upon failed data refreshes.
 
-The app is capable of sending SMS, WhatsApp and perform phone calls when certain events take place on a Tableau Server or Tableau Online site.
+The app is capable of making REST API calls to Tableau after an event takes place as well as sending SMS, WhatsApp and perform phone calls when a data source or workbook fails to refresh.
 
 ![tableau + twilio](assets/images/tableau+twilio.png)
 
 </br>
 
 ## Table of Contents
-- [Tableau Webhooks & Twilio](#tableau-webhooks--twilio)
+- [Tableau Webhooks](#tableau-webhooks)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Installation](#installation)
