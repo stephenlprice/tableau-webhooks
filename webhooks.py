@@ -12,7 +12,7 @@ env_dict = dict(os.environ)
 # dictionary with required environment variables
 env_vars = [
   "TABLEAU_PAT_NAME", 
-  "TABLEAU_PASSWORD", 
+  "TABLEAU_PAT_SECRET", 
   "TABLEAU_SITENAME", 
   "TABLEAU_SERVER",
   "TWILIO_ACCOUNT_SID",
@@ -54,7 +54,7 @@ def notify():
     print(request)
     if request.method == "POST":
         # creates an authorization object using environment variables
-        tableauAuth = TSC.PersonalAccessTokenAuth(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PASSWORD"], env_dict["TABLEAU_SITENAME"])
+        tableauAuth = TSC.PersonalAccessTokenAuth(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PAT_SECRET"], env_dict["TABLEAU_SITENAME"])
         # server object using environment variables
         server = TSC.Server(env_dict["TABLEAU_SERVER"])
         # append response data to log.txt
