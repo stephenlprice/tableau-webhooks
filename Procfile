@@ -1,1 +1,1 @@
-web: gunicorn notifier:app
+web: gunicorn webhooks:app
