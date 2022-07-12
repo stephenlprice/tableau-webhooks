@@ -10,3 +10,4 @@ dependencies:
     - python-dotenv==0.19.2
     - twilio==7.3.0
     - tableauserverclient==0.17.0
+    - pyjwt[crypto]==2.4.0
