@@ -72,6 +72,31 @@ app = Flask(__name__)
 def index():
     return '<h1>Notifier API Index</h1>\n<ul><li>/notifier <strong>POST</strong> - receives incoming Tableau Server webhooks to create datasource failure notifications</li></ul>'
 
+# handles updating views on tableau broadcast once workbooks are refreshed on tableau cloud
+@app.route("/broadcast", methods=["GET", "POST"])
+def broadcast():
+  print(request)
+  if request.method == "POST":
+    print(request)
+
+    # encode the JWT with declared payload, secret and headers
+    token = jwt.encode(
+      payload_data,
+      connected_app_secret,
+      header_data
+    )
+
+    return "200 SUCCESS"
+
+  elif request.method == "GET":
+    # GET requests redirects to index "/" to display a list of supported API endpoints
+    return redirect(url_for("index"))
+
+  else:
+    # any other methods are not supported
+    return "400 Bad Request: method not supported"
+
+# handles notifications for failed data source refreshes
 @app.route("/notifier", methods=["GET", "POST"])
 def notify():
     print(request)
@@ -120,10 +145,13 @@ def notify():
 
         return "200 SUCCESS"
 
-
-    else:
+    elif request.method == "GET":
       # GET requests redirects to index "/" to display a list of supported API endpoints
       return redirect(url_for("index"))
+
+    else:
+      # any other methods are not supported
+      return "400 Bad Request: method not supported"
 
 if __name__ == "__main__":
   app.run()
