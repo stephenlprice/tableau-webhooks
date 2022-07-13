@@ -1,4 +1,4 @@
-import os, datetime
+import os, datetime, uuid
 from dotenv import load_dotenv
 from flask import Flask, request, redirect, url_for
 import tableauserverclient as TSC
@@ -81,10 +81,20 @@ def broadcast():
 
     # encode the JWT with declared payload, secret and headers
     token = jwt.encode(
-      payload_data,
-      connected_app_secret,
-      header_data
+      payload = payload_data,
+      key = connected_app_secret,
+      headers = header_data
     )
+    print(f'encoded token: {token}')
+
+    # decode the JWT for testing purposes
+    decodedToken = jwt.decode(
+      jwt = token, 
+      key = connected_app_secret,
+      audience = payload_data["aud"], 
+      algorithms = header_data["alg"]
+    )
+    print(f'decoded token: {decodedToken}')
 
     return "200 SUCCESS"
 
