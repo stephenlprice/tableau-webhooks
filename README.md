@@ -65,7 +65,7 @@ conda activate tableau-webhooks
 # create the .env file
 touch .env
 ```
-> ##### *__NOTE__: the server will have a `RuntimeError` if these environment variables are not accessible.*
+> ##### *__NOTE__: the server will raise a `RuntimeError` if these environment variables are not accessible.*
 </br>
 
 4. Run the app locally with gunicorn
