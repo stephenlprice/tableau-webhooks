@@ -20,8 +20,8 @@ env_vars = [
 # check that each environment variable is available, else throw an exception
 for vars in env_vars:
   try:
-      # check the local dictionary pulled from os.environ
-      env_dict[vars]
+    # check the local dictionary pulled from os.environ
+    env_dict[vars]
   except KeyError:
     # output the first environment variable to fail and shut the server down
     raise RuntimeError(f"Environment variable {vars} is not available, server shutting down...")
@@ -80,6 +80,10 @@ auth_headers = {
   'Accept': 'application/json'
 }
 
+print(auth_url)
+
+print(auth_payload.format(token, env_dict["TABLEAU_SITENAME"]))
+
 response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(token, env_dict["TABLEAU_SITENAME"]))
 
 response_body = response.json()
@@ -90,7 +94,7 @@ site_id = response_body["credentials"]["site"]["id"]
 api_key = response_body["credentials"]["token"]
 print(site_id)
 
-# get a list of broadcast views for a site
+# get a list of views for a site
 views_url = f'{base_path}/exp/sites/{site_id}/views'
 
 payload={}
