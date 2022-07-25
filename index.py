@@ -2,26 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request, redirect, url_for
 from modules import broadcast
-from utils import log, environment
-
-# dictionary with required environment variables
-env_vars = [
-  "TABLEAU_SERVER",
-  "TABLEAU_SITENAME",
-  "TABLEAU_RESTAPI_VERSION",
-  "TABLEAU_USERNAME",
-  "TABLEAU_CA_CLIENT",
-  "TABLEAU_CA_SECRET_ID",
-  "TABLEAU_CA_SECRET_VALUE",
-  "TABLEAU_PAT_NAME",
-  "TABLEAU_PAT_SECRET",
-  "TWILIO_ACCOUNT_SID",
-  "TWILIO_AUTH_TOKEN",
-  "TWILIO_FROM_NUMBER",
-  "TWILIO_TO_NUMBER",
-  "WHATSAPP_FROM",
-  "WHATSAPP_TO"
-]
+from utils import environment
 
 # load environment files from .env
 load_dotenv("../.env")
@@ -29,9 +10,7 @@ load_dotenv("../.env")
 env_dict = dict(os.environ)
 
 # validate environment variables
-environment.validate(env_dict, env_vars)
-print('SUCCESS: environment validation passed...')
-log.logger.info('SUCCESS: environment validation passed...')
+environment.validate(env_dict)
 
 # initiate the Flask instance
 app = Flask(__name__)
@@ -43,11 +22,12 @@ def index():
 
 # handles updating views on tableau broadcast once workbooks are refreshed on tableau cloud
 @app.route("/broadcast-update", methods=["GET", "POST"])
-def broadcast():
+def update():
   if request.method == "POST":
     print(request)
+    workbook_id = ''
     # this method updates workbooks published to broadcast
-    broadcast.update(env_dict)
+    broadcast.update(env_dict, workbook_id)
     return "200 SUCCESS"
 
   elif request.method == "GET":
