@@ -1,20 +1,23 @@
-import os, datetime
+import os
 from dotenv import load_dotenv
 from flask import Flask, request, redirect, url_for
 import tableauserverclient as TSC
 from tableauserverclient.models.pagination_item import PaginationItem
 from twilio.rest import Client
+from utils import log, environment
+from modules import connected_apps, rest
 
-# load environment files from .env
-load_dotenv("./.env")
-# calling environ is expensive, this saves environment variables to a dictionary
-env_dict = dict(os.environ)
 # dictionary with required environment variables
 env_vars = [
-  "TABLEAU_PAT_NAME", 
-  "TABLEAU_PASSWORD", 
-  "TABLEAU_SITENAME", 
   "TABLEAU_SERVER",
+  "TABLEAU_SITENAME",
+  "TABLEAU_RESTAPI_VERSION",
+  "TABLEAU_USERNAME",
+  "TABLEAU_CA_CLIENT",
+  "TABLEAU_CA_SECRET_ID",
+  "TABLEAU_CA_SECRET_VALUE",
+  "TABLEAU_PAT_NAME",
+  "TABLEAU_PAT_SECRET",
   "TWILIO_ACCOUNT_SID",
   "TWILIO_AUTH_TOKEN",
   "TWILIO_FROM_NUMBER",
@@ -23,14 +26,26 @@ env_vars = [
   "WHATSAPP_TO"
 ]
 
-# check that each environment variable is available, else throw an exception
-for vars in env_vars:
-  try:
-      # check the local dictionary pulled from os.environ
-      env_dict[vars]
-  except KeyError:
-    # output the first environment variable to fail and shut the server down
-    raise RuntimeError(f"Environment variable {vars} is not available, server shutting down...")
+# load environment files from .env
+load_dotenv("../.env")
+# calling environ is expensive, this saves environment variables to a dictionary
+env_dict = dict(os.environ)
+
+# validate environment variables
+environment.validate(env_dict, env_vars)
+print('SUCCESS: environment validation passed...')
+log.logger.info('SUCCESS: environment validation passed...')
+
+
+# authenticate to Tableau's REST API
+api_key = rest.auth(env_dict, jwt)
+print('SUCCESS: REST API key obtained...')
+log.logger.info('SUCCESS: REST API key obtained...')
+
+# get a list of workbooks on the site
+workbooks = rest.get_workbooks_site(api_key)
+print('SUCCESS: Workbooks queried...')
+log.logger.info('SUCCESS: Workbooks by site queried...')
 
 # twilio variables
 twilioSID = env_dict["TWILIO_ACCOUNT_SID"]
@@ -49,12 +64,34 @@ app = Flask(__name__)
 def index():
     return '<h1>Notifier API Index</h1>\n<ul><li>/notifier <strong>POST</strong> - receives incoming Tableau Server webhooks to create datasource failure notifications</li></ul>'
 
+# handles updating views on tableau broadcast once workbooks are refreshed on tableau cloud
+@app.route("/broadcast", methods=["GET", "POST"])
+def broadcast():
+  if request.method == "POST":
+    print(request)
+
+    # encode a JWT token for connected apps authentication: https://help.tableau.com/current/online/en-us/connected_apps.htm#step-4-embedding-next-steps
+    jwt = connected_apps.encode(env_dict)
+    print('SUCCESS: jwt encoded...')
+    log.logger.info('SUCCESS: jwt encoded...')
+
+    return "200 SUCCESS"
+
+  elif request.method == "GET":
+    # GET requests redirects to index "/" to display a list of supported API endpoints
+    return redirect(url_for("index"))
+
+  else:
+    # any other methods are not supported
+    return "400 Bad Request: method not supported"
+
+# handles notifications for failed data source refreshes
 @app.route("/notifier", methods=["GET", "POST"])
 def notify():
     print(request)
     if request.method == "POST":
         # creates an authorization object using environment variables
-        tableauAuth = TSC.PersonalAccessTokenAuth(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PASSWORD"], env_dict["TABLEAU_SITENAME"])
+        tableauAuth = TSC.PersonalAccessTokenAuth(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PAT_SECRET"], env_dict["TABLEAU_SITENAME"])
         # server object using environment variables
         server = TSC.Server(env_dict["TABLEAU_SERVER"])
         # append response data to log.txt
@@ -97,10 +134,13 @@ def notify():
 
         return "200 SUCCESS"
 
-
-    else:
+    elif request.method == "GET":
       # GET requests redirects to index "/" to display a list of supported API endpoints
       return redirect(url_for("index"))
+
+    else:
+      # any other methods are not supported
+      return "400 Bad Request: method not supported"
 
 if __name__ == "__main__":
   app.run()
