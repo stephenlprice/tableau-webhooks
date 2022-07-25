@@ -1,11 +1,12 @@
-import os
+import os, datetime
 from dotenv import load_dotenv
 from flask import Flask, request, redirect, url_for
 import tableauserverclient as TSC
 from tableauserverclient.models.pagination_item import PaginationItem
 from twilio.rest import Client
+from modules import broadcast
+from libs import tableau_rest
 from utils import log, environment
-from modules import connected_apps, rest
 
 # dictionary with required environment variables
 env_vars = [
@@ -36,17 +37,6 @@ environment.validate(env_dict, env_vars)
 print('SUCCESS: environment validation passed...')
 log.logger.info('SUCCESS: environment validation passed...')
 
-
-# authenticate to Tableau's REST API
-api_key = rest.auth(env_dict, jwt)
-print('SUCCESS: REST API key obtained...')
-log.logger.info('SUCCESS: REST API key obtained...')
-
-# get a list of workbooks on the site
-workbooks = rest.get_workbooks_site(api_key)
-print('SUCCESS: Workbooks queried...')
-log.logger.info('SUCCESS: Workbooks by site queried...')
-
 # twilio variables
 twilioSID = env_dict["TWILIO_ACCOUNT_SID"]
 twilioAuthToken = env_dict["TWILIO_AUTH_TOKEN"]
@@ -65,16 +55,11 @@ def index():
     return '<h1>Notifier API Index</h1>\n<ul><li>/notifier <strong>POST</strong> - receives incoming Tableau Server webhooks to create datasource failure notifications</li></ul>'
 
 # handles updating views on tableau broadcast once workbooks are refreshed on tableau cloud
-@app.route("/broadcast", methods=["GET", "POST"])
+@app.route("/broadcast-update", methods=["GET", "POST"])
 def broadcast():
   if request.method == "POST":
     print(request)
-
-    # encode a JWT token for connected apps authentication: https://help.tableau.com/current/online/en-us/connected_apps.htm#step-4-embedding-next-steps
-    jwt = connected_apps.encode(env_dict)
-    print('SUCCESS: jwt encoded...')
-    log.logger.info('SUCCESS: jwt encoded...')
-
+    broadcast.update(env_dict)
     return "200 SUCCESS"
 
   elif request.method == "GET":
