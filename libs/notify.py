@@ -11,6 +11,7 @@ def sms(env_dict, msgStr):
   )
   # logFile.write(f"Text message SID: {textMessage.sid}\nSending SMS message from {fromNumber} to {toNumber}\n")
 
+
 def whatsapp(env_dict, msgStr):
   twilioClient = Client(env_dict['TWILIO_ACCOUNT_SID'], env_dict['TWILIO_AUTH_TOKEN'])
   whatsappMessage = twilioClient.messages.create(
@@ -19,6 +20,7 @@ def whatsapp(env_dict, msgStr):
     to = env_dict['WHATSAPP_TO']
   )
   # logFile.write(f"Whatsapp message SID: {whatsappMessage.sid}\nSending Whatsapp message from {fromWhatsApp} to {toWhatsApp}\n")
+
 
 def call(env_dict, msgStr):
   twilioClient = Client(env_dict['TWILIO_ACCOUNT_SID'], env_dict['TWILIO_AUTH_TOKEN'])
