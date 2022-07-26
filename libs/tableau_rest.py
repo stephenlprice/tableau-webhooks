@@ -91,7 +91,7 @@ def get_broadcasts(api_key):
     response = requests.request("GET", broadcasts_url, headers=headers, data=payload)
 
   except Exception as error:
-    raise exceptions.TableauRestError(error)
+    raise exceptions.TableauGetBroadcast(error)
   
   else:
     response_body = response.json()
@@ -126,7 +126,7 @@ def update_broadcast(api_key, broadcasts, workbook_id, show_watermark, show_tabs
         response = requests.request("POST", update_url, headers=headers, data=payload)
       
       except Exception as error:
-        raise exceptions.TableauRestError(error)
+        raise exceptions.TableauUpdateBroadcast(error)
       
       else:
         response_body = response.json()
