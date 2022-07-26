@@ -44,7 +44,7 @@ class JWTEncodingError(Error):
 
   def __init__(self, error):
     self.message = f"Cannot encode JWT: {error}"
-    self.log = log.logger.error(f"Cannot encode JWT, {error}")
+    self.log = log.logger.error(f"Cannot encode JWT: {error}")
     super().__init__(self.message)
 
 
@@ -58,7 +58,7 @@ class JWTDecodingError(Error):
 
   def __init__(self, error):
     self.message = f"Cannot decode JWT: {error}"
-    self.log = log.logger.error(f"Cannot decode JWT, {error}")
+    self.log = log.logger.error(f"Cannot decode JWT: {error}")
     super().__init__(self.message)
 
 
@@ -72,7 +72,7 @@ class TableauRestAuthError(Error):
 
   def __init__(self, error):
     self.message = f"Authentication to Tableau REST API failed: {error}"
-    self.log = log.logger.error(f"Authentication to Tableau REST API failed, {error}")
+    self.log = log.logger.error(f"Authentication to Tableau REST API failed: {error}")
     super().__init__(self.message)
 
 
@@ -86,6 +86,34 @@ class TableauRestError(Error):
 
   def __init__(self, error):
     self.message = f"Request to Tableau REST API failed: {error}"
-    self.log = log.logger.error(f"Request to Tableau REST API failed, {error}")
+    self.log = log.logger.error(f"Request to Tableau REST API failed: {error}")
+    super().__init__(self.message)
+
+
+class TableauGetBroadcast(Error):
+  """
+  Exception raised when get_broadcast requests to Tableau's REST API fail
+
+  Attributes:
+    key_attribute -- error
+  """
+
+  def __init__(self, error):
+    self.message = f"Get Broadcast failed: {error}"
+    self.log = log.logger.error(f"Get Broadcast failed: {error}")
+    super().__init__(self.message)
+
+
+class TableauUpdateBroadcast(Error):
+  """
+  Exception raised when update_broadcast requests to Tableau's REST API fail
+
+  Attributes:
+    key_attribute -- error
+  """
+
+  def __init__(self, error):
+    self.message = f"Update Broadcast failed: {error}"
+    self.log = log.logger.error(f"Update Broadcast failed: {error}")
     super().__init__(self.message)
     
