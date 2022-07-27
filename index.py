@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request, redirect, url_for
 from modules import broadcast
-from utils import environment
+from utils import environment, log
 
 # load environment files from .env
 load_dotenv(".env")
@@ -25,6 +25,7 @@ def index():
 def update():
   if request.method == "POST":
     print(request)
+    log.logger.info(f"Broadcast updated: {json.dumps(response_body, indent=2, sort_keys=True)}")
     workbook_id = ''
     # this method updates workbooks published to broadcast
     broadcast.update(env_dict, workbook_id)
