@@ -1,4 +1,4 @@
-from libs import connected_apps, tableau_rest
+from libs import tableau_rest
 
 def update(env_dict, workbook_id):
   # authenticate to Tableau's REST API
