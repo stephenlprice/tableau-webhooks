@@ -13,7 +13,7 @@ paths = {
 }
 
 # authentication into tableau's REST API with a valid JWT
-def auth(env_dict, jwt):
+def auth_jwt(env_dict, jwt):
   # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
   paths['classic'] = f"{env_dict['TABLEAU_SERVER']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
   paths['new'] = f"{env_dict['TABLEAU_SERVER']}/api/exp"
@@ -35,6 +35,46 @@ def auth(env_dict, jwt):
 
   try:
     response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(jwt, env_dict["TABLEAU_SITENAME"]))
+
+  except Exception as error:
+    raise exceptions.TableauRestAuthError(error)
+
+  else:
+    response_body = response.json()
+    log.logger.info(f"Successful authentication to Tableau REST API: {json.dumps(response_body, indent=2, sort_keys=True)}")
+    print(f"Successful authentication to Tableau REST API: {json.dumps(response_body, indent=2, sort_keys=True)}")
+
+    # assign credential and path values from response
+    credentials["site_id"] = response_body["credentials"]["site"]["id"]
+    credentials["api_key"] = response_body["credentials"]["token"]
+
+    # successful JWT authentication returns an API key to be used in future requests
+    return credentials["api_key"]
+
+
+# authentication into tableau's REST API with a valid PAT
+def auth_pat(env_dict):
+  # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
+  paths['classic'] = f"{env_dict['TABLEAU_SERVER']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
+  paths['new'] = f"{env_dict['TABLEAU_SERVER']}/api/exp"
+  # the path used for authentication
+  auth_url = f'{paths["classic"]}/auth/signin'
+
+  auth_payload = """
+  <tsRequest>
+    <credentials personalAccessTokenName="{0}" personalAccessTokenSecret="{1}">
+        <site contentUrl="{2}"/>
+    </credentials>
+  </tsRequest>
+  """
+
+  auth_headers = {
+    'Content-Type': 'application/xml',
+    'Accept': 'application/json'
+  }
+
+  try:
+    response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PAT_SECRET"], env_dict["TABLEAU_SITENAME"]))
 
   except Exception as error:
     raise exceptions.TableauRestAuthError(error)
