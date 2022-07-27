@@ -31,10 +31,9 @@ def validate(env_dict):
       if len(env_dict[vars]) == 0:
         raise exceptions.EnvironmentAttributeError(vars)
 
-    except KeyError as error:
+    except KeyError:
       # raises error if an environment variable has not been declared
-      raise exceptions.EnvironmentKeyError(vars, error)
+      raise exceptions.EnvironmentKeyError(vars)
     
-    else:
-      print('SUCCESS: environment validation passed...')
-      log.logger.info('SUCCESS: environment validation passed...')
+  print('SUCCESS: environment validation passed...')
+  log.logger.info('SUCCESS: environment validation passed...')
