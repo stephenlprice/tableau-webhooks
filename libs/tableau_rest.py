@@ -146,22 +146,22 @@ def update_broadcast(api_key, broadcasts, workbook_id, show_watermark, show_tabs
   params = '?acceptTermsOfUse=true&overwrite=yes'
   update_url = f'{paths["new"]}/sites/{credentials["site_id"]}/broadcasts/views{params}'
 
-  payload = json.dumps({
-    "broadcastViewSend": {
-      "viewId": broadcast['view']['id'],
-      "showWatermark": show_watermark,
-      "showTabs": show_tabs
-    }
-  })
-  headers = {
-    'Accept': 'application/json',
-    'X-Tableau-Auth': api_key,
-    'Content-Type': 'application/json',
-  }
-
   # get all current broadcast views
   for broadcast in broadcasts['broadcastViews']['broadcast']:
     if broadcast['view']['workbook']['id'] == workbook_id:
+      payload = json.dumps({
+        "broadcastViewSend": {
+          "viewId": broadcast['view']['id'],
+          "showWatermark": show_watermark,
+          "showTabs": show_tabs
+        }
+      })
+      headers = {
+        'Accept': 'application/json',
+        'X-Tableau-Auth': api_key,
+        'Content-Type': 'application/json',
+      }
+      
       try:
         response = requests.request("POST", update_url, headers=headers, data=payload)
       
