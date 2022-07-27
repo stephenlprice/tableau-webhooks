@@ -25,7 +25,7 @@ def index():
 def update():
   if request.method == "POST":
     print(request)
-    log.logger.info(f"Broadcast updated: {json.dumps(response_body, indent=2, sort_keys=True)}")
+    log.logger.info(f"Broadcast updated: {request}")
     workbook_id = ''
     # this method updates workbooks published to broadcast
     broadcast.update(env_dict, workbook_id)
