@@ -1,3 +1,4 @@
+from werkzeug.exceptions import HTTPException
 from utils import log
 
 class Error(Exception):
@@ -90,7 +91,7 @@ class TableauRestError(Error):
     super().__init__(self.message)
 
 
-class TableauGetBroadcast(Error):
+class TableauRestGetBroadcast(Error):
   """
   Exception raised when get_broadcast requests to Tableau's REST API fail
 
@@ -104,7 +105,7 @@ class TableauGetBroadcast(Error):
     super().__init__(self.message)
 
 
-class TableauUpdateBroadcast(Error):
+class TableauRestPostBroadcast(Error):
   """
   Exception raised when update_broadcast requests to Tableau's REST API fail
 
@@ -116,4 +117,35 @@ class TableauUpdateBroadcast(Error):
     self.message = f"Update Broadcast failed: {error}"
     self.log = log.logger.error(f"Update Broadcast failed: {error}")
     super().__init__(self.message)
+
+
+# class TableauUpdateBroadcast(Error):
+#   """
+#   Exception raised when broadcast.update() methods fail
+
+#   Attributes:
+#     key_attribute -- error
+#   """
+
+#   def __init__(self, error):
+#     self.message = f"Method broadcast.update() failed: {error}"
+#     self.log = log.logger.error(f"Method broadcast.update() failed: {error}")
+#     super().__init__(self.message)
+#     return "500 INTERNAL SERVER ERROR", 500
+
+class test(HTTPException):
+  """
+  Exception raised when broadcast.update() methods fail
+
+  Attributes:
+    key_attribute -- error
+  """
+
+  def __init__(self):
+    self.message = f"test"
+    self.log = log.logger.error(f"test")
+    super().__init__(self.message)
+  
+  def error_code(self):
+    return "500 INTERNAL SERVER ERROR"
     
