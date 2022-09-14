@@ -131,7 +131,7 @@ def get_broadcasts(api_key):
     response = requests.request("GET", broadcasts_url, headers=headers, data=payload)
 
   except Exception as error:
-    raise exceptions.TableauGetBroadcast(error)
+    raise exceptions.TableauRestGetBroadcast(error)
   
   else:
     response_body = response.json()
@@ -161,12 +161,12 @@ def update_broadcast(api_key, broadcasts, workbook_id, show_watermark, show_tabs
         'X-Tableau-Auth': api_key,
         'Content-Type': 'application/json',
       }
-      
+
       try:
         response = requests.request("POST", update_url, headers=headers, data=payload)
       
       except Exception as error:
-        raise exceptions.TableauUpdateBroadcast(error)
+        raise exceptions.TableauRestPostBroadcast(error)
       
       else:
         response_body = response.json()
