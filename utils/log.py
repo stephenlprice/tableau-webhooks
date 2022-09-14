@@ -11,9 +11,9 @@ formatter = logging.Formatter(
   datefmt='%Y-%m-%d:%H:%M:%S'
 )
 
-# create stream handler and set level to debug
-sh = logging.StreamHandler(stream=sys.stdout)
-sh.setLevel(logging.DEBUG)
+# create stream handler and set level to warning
+sh = logging.StreamHandler(stream=sys.stderr)
+sh.setLevel(logging.WARNING)
 # add formatter to sh
 sh.setFormatter(formatter)
 # create file handler
