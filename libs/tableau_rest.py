@@ -1,5 +1,6 @@
 import requests
 import json
+from tableau import TableauEnv
 from utils import exceptions, log
 
 credentials = {
@@ -12,13 +13,17 @@ paths = {
   "new": "",
 }
 
+
 # authentication into tableau's REST API with a valid JWT
 def auth_jwt(env_dict, jwt):
   # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
-  paths['classic'] = f"{env_dict['TABLEAU_SERVER']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
-  paths['new'] = f"{env_dict['TABLEAU_SERVER']}/api/exp"
+  site = TableauEnv(env_dict['TABLEAU_SERVER'], env_dict["TABLEAU_SITENAME"], env_dict['TABLEAU_RESTAPI_VERSION'])
+  
+  # paths['classic'] = f"{env_dict['TABLEAU_SERVER']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
+  # paths['new'] = f"{env_dict['TABLEAU_SERVER']}/api/exp"
+
   # the path used for authentication
-  auth_url = f'{paths["classic"]}/auth/signin'
+  auth_url = f'{site.paths.classic}/auth/signin'
 
   auth_payload = """
   <tsRequest>
@@ -34,7 +39,7 @@ def auth_jwt(env_dict, jwt):
   }
 
   try:
-    response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(jwt, env_dict["TABLEAU_SITENAME"]))
+    response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(jwt, site.name))
 
   except Exception as error:
     raise exceptions.TableauRestAuthError(error)
@@ -42,14 +47,16 @@ def auth_jwt(env_dict, jwt):
   else:
     response_body = response.json()
     log.logger.info(f"Successful authentication to Tableau REST API: {json.dumps(response_body, indent=2, sort_keys=True)}")
-    print(f"Successful authentication to Tableau REST API: {json.dumps(response_body, indent=2, sort_keys=True)}")
 
     # assign credential and path values from response
-    credentials["site_id"] = response_body["credentials"]["site"]["id"]
-    credentials["api_key"] = response_body["credentials"]["token"]
+    site.id = response_body["credentials"]["site"]["id"]
+    site.api_key = response_body["credentials"]["token"]
 
-    # successful JWT authentication returns an API key to be used in future requests
-    return credentials["api_key"]
+    # credentials["site_id"] = response_body["credentials"]["site"]["id"]
+    # credentials["api_key"] = response_body["credentials"]["token"]
+
+    # successful JWT authentication returns a site object to be used in future requests
+    return site
 
 
 # authentication into tableau's REST API with a valid PAT
