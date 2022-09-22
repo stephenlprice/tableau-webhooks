@@ -1,5 +1,4 @@
-from utils import exceptions
-from utils import log
+from utils import exceptions, log
 
 # dictionary with required environment variables
 env_vars = [
@@ -35,5 +34,4 @@ def validate(env_dict):
       # raises error if an environment variable has not been declared
       raise exceptions.EnvironmentKeyError(vars)
     
-  print('SUCCESS: environment validation passed...')
   log.logger.info('SUCCESS: environment validation passed...')
