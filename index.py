@@ -30,18 +30,17 @@ def index():
 
 # handles updating views on tableau broadcast once workbooks are refreshed on tableau cloud
 @app.route("/broadcast-update", methods=["GET", "POST"])
-def update():
+def updateBroadcast():
   if request.method == "POST":
-    print(request)
-    log.logger.info(f"Broadcast updated: {request}")
-    workbook_id = ''
+    log.logger.info(f"Broadcast workbook updated: {request}")
+    # request objects lacking this key automatically raise a KeyError and a 400 Bad Request response
+    workbook_id = request.form["resource_luid"]
 
     try:
-      # this method updates workbooks published to broadcast
+      # pushes updates to broadcast if webhook payload workbook id matches an existing broadcast id
       broadcast.update(env_dict, workbook_id)
     except Exception as error:
-      # use Flask's built-in logging for HTTP errors
-      app.logger.warning("Cannot update Broadcast: ", error)
+      log.logger.error("Cannot update Broadcast: ", error)
       return "500 INTERNAL SERVER ERROR", 500
     else:
       return "202 ACCEPTED", 202
@@ -52,12 +51,12 @@ def update():
 
   else:
     # any other methods are not supported
+    log.logger.error("400 BAD REQUEST: HTTP method not supported")
     return "400 BAD REQUEST: HTTP method not supported", 400
 
 # handles notifications for failed workbook refreshes
 @app.route("/workbook-refresh-fail", methods=["GET", "POST"])
 def notify():
-  print(request)
   if request.method == "POST":  
   
     return "200 SUCCESS"
