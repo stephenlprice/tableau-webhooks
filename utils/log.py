@@ -13,12 +13,12 @@ formatter = logging.Formatter(
 
 # create stream handler and set level to warning
 sh = logging.StreamHandler(stream=sys.stderr)
-sh.setLevel(logging.WARNING)
+sh.setLevel(logging.DEBUG)
 # add formatter to sh
 sh.setFormatter(formatter)
 # create file handler
 fh = logging.FileHandler(filename='logs/webhooks.log')
-fh.setLevel(logging.DEBUG)
+fh.setLevel(logging.WARNING)
 # add formatter to fh
 fh.setFormatter(formatter)
 # add sh & fh to logger
