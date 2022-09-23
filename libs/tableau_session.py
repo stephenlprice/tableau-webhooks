@@ -10,8 +10,8 @@ class TableauEnv:
   def __init__(self, tableau_domain, site_name, api_version):
     self.paths.classic = f"{tableau_domain}/api/{api_version}"
     self.paths.new = f"{tableau_domain}/api/exp"
-    self.name = site_name
-    self.id = None
+    self.site_name = site_name
+    self.site_id = None
     self.api_key = None
   
   def __str__(self):
