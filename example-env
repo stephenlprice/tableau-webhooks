@@ -1,4 +1,4 @@
-TABLEAU_SERVER='tableau server or tableau cloud domain'
+TABLEAU_DOMAIN='tableau server or tableau cloud domain'
 TABLEAU_SITENAME='tableau sitename'
 TABLEAU_RESTAPI_VERSION='tableau rest api version'
 TABLEAU_USERNAME='tableau username'

@@ -110,16 +110,22 @@ To protect private data such as phone numbers and passwords, this project relies
 Your `.env` file must contain all of the following variables:
 
 ```bash
-TABLEAU_PAT_NAME=your-token-name
-TABLEAU_PASSWORD=your-token-password
-TABLEAU_SITENAME=your-sitename
-TABLEAU_SERVER=your-tableau-server-online-domain
-TWILIO_ACCOUNT_SID=your-twilio-account
-TWILIO_AUTH_TOKEN=your-twilio-token
-TWILIO_FROM_NUMBER=+1your-twilio-number
-TWILIO_TO_NUMBER=+1your-number
-WHATSAPP_FROM=whatsapp:+1your-twilio-whatsappsandbox-number
-WHATSAPP_TO=whatsapp:+1your-whatsapp-number
+TABLEAU_DOMAIN='tableau server or tableau cloud domain'
+TABLEAU_SITENAME='tableau sitename'
+TABLEAU_RESTAPI_VERSION='tableau rest api version'
+TABLEAU_USERNAME='tableau username'
+TABLEAU_CA_CLIENT='connected app client id'
+TABLEAU_CA_SECRET_ID='connected app secret id'
+TABLEAU_CA_SECRET_VALUE='connected app secret value'
+TABLEAU_PAT_NAME='personal access token name'
+TABLEAU_PAT_SECRET='personal access token secret'
+TWILIO_ACCOUNT_SID='twilio account'
+TWILIO_AUTH_TOKEN='twilio token'
+TWILIO_FROM_NUMBER='+1 twilio account phone number'
+TWILIO_TO_NUMBER='+1 your phone number'
+WHATSAPP_FROM='whatsapp:+1 twilio whatsapp sandbox number'
+WHATSAPP_TO='whatsapp:+1 your whatsapp number'
+FLASK_ENV='default is production, set to development for debugging'
 ```
 
 </br>

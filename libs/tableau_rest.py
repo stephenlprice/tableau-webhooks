@@ -1,6 +1,6 @@
 import requests
 import json
-from tableau import TableauEnv
+from tableau_session import TableauEnv
 from utils import exceptions, log
 
 credentials = {
@@ -13,15 +13,19 @@ paths = {
   "new": "",
 }
 
+# create a new session object to store information needed for REST API calls
+def new_session(domain, site, api_version):
+  session = TableauEnv(domain, site, api_version)
+  return session
 
 # authentication into tableau's REST API with a valid JWT
 def auth_jwt(env_dict, jwt):
-  # create a new TableauEnv object to store information needed for REST API calls
-  tableau_session = TableauEnv(env_dict['TABLEAU_SERVER'], env_dict["TABLEAU_SITENAME"], env_dict['TABLEAU_RESTAPI_VERSION'])
+  # pass environment variables to create an object used to establish a session with a Tableau site
+  tableau_session = new_session(env_dict['TABLEAU_DOMAIN'], env_dict["TABLEAU_SITENAME"], env_dict['TABLEAU_RESTAPI_VERSION'])
   
   # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
-  # paths['classic'] = f"{env_dict['TABLEAU_SERVER']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
-  # paths['new'] = f"{env_dict['TABLEAU_SERVER']}/api/exp"
+  # paths['classic'] = f"{env_dict['TABLEAU_DOMAIN']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
+  # paths['new'] = f"{env_dict['TABLEAU_DOMAIN']}/api/exp"
 
   # the path used for authentication
   auth_url = f'{tableau_session.paths.classic}/auth/signin'
@@ -49,22 +53,22 @@ def auth_jwt(env_dict, jwt):
     response_body = response.json()
     log.logger.info(f"Successful authentication to Tableau REST API: {json.dumps(response_body, indent=2, sort_keys=True)}")
 
-    # assign credential and path values from response
+    # assign api key and path values from response
     tableau_session.id = response_body["credentials"]["site"]["id"]
     tableau_session.api_key = response_body["credentials"]["token"]
 
     # credentials["site_id"] = response_body["credentials"]["site"]["id"]
     # credentials["api_key"] = response_body["credentials"]["token"]
 
-    # successful JWT authentication returns a site object to be used in future requests
+    # JWT authentication returns a tableau_session object to be used in subsequent requests
     return tableau_session
 
 
 # authentication into tableau's REST API with a valid PAT
 def auth_pat(env_dict):
   # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
-  paths['classic'] = f"{env_dict['TABLEAU_SERVER']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
-  paths['new'] = f"{env_dict['TABLEAU_SERVER']}/api/exp"
+  paths['classic'] = f"{env_dict['TABLEAU_DOMAIN']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
+  paths['new'] = f"{env_dict['TABLEAU_DOMAIN']}/api/exp"
   # the path used for authentication
   auth_url = f'{paths["classic"]}/auth/signin'
 
