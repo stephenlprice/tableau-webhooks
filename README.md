@@ -113,6 +113,7 @@ Your `.env` file must contain all of the following variables:
 TABLEAU_DOMAIN='tableau server or tableau cloud domain'
 TABLEAU_SITENAME='tableau sitename'
 TABLEAU_RESTAPI_VERSION='tableau rest api version'
+TABLEAU_SESSION_MINUTES=240
 TABLEAU_USERNAME='tableau username'
 TABLEAU_CA_CLIENT='connected app client id'
 TABLEAU_CA_SECRET_ID='connected app secret id'
