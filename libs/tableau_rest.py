@@ -16,14 +16,15 @@ paths = {
 
 # authentication into tableau's REST API with a valid JWT
 def auth_jwt(env_dict, jwt):
-  # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
-  site = TableauEnv(env_dict['TABLEAU_SERVER'], env_dict["TABLEAU_SITENAME"], env_dict['TABLEAU_RESTAPI_VERSION'])
+  # create a new TableauEnv object to store information needed for REST API calls
+  tableau_session = TableauEnv(env_dict['TABLEAU_SERVER'], env_dict["TABLEAU_SITENAME"], env_dict['TABLEAU_RESTAPI_VERSION'])
   
+  # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
   # paths['classic'] = f"{env_dict['TABLEAU_SERVER']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
   # paths['new'] = f"{env_dict['TABLEAU_SERVER']}/api/exp"
 
   # the path used for authentication
-  auth_url = f'{site.paths.classic}/auth/signin'
+  auth_url = f'{tableau_session.paths.classic}/auth/signin'
 
   auth_payload = """
   <tsRequest>
@@ -39,7 +40,7 @@ def auth_jwt(env_dict, jwt):
   }
 
   try:
-    response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(jwt, site.name))
+    response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(jwt, tableau_session.name))
 
   except Exception as error:
     raise exceptions.TableauRestAuthError(error)
@@ -49,14 +50,14 @@ def auth_jwt(env_dict, jwt):
     log.logger.info(f"Successful authentication to Tableau REST API: {json.dumps(response_body, indent=2, sort_keys=True)}")
 
     # assign credential and path values from response
-    site.id = response_body["credentials"]["site"]["id"]
-    site.api_key = response_body["credentials"]["token"]
+    tableau_session.id = response_body["credentials"]["site"]["id"]
+    tableau_session.api_key = response_body["credentials"]["token"]
 
     # credentials["site_id"] = response_body["credentials"]["site"]["id"]
     # credentials["api_key"] = response_body["credentials"]["token"]
 
     # successful JWT authentication returns a site object to be used in future requests
-    return site
+    return tableau_session
 
 
 # authentication into tableau's REST API with a valid PAT
