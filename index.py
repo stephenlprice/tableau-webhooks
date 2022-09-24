@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, request
-from modules import broadcast
+from modules import webhooks
 from utils import environment, log
 
 # load environment files from .env
@@ -15,21 +15,17 @@ environment.validate(env_dict)
 # initiate the Flask instance
 app = Flask(__name__)
 
-# updates broadcast views when workbooks refreshes trigger a webhook
-@app.route("/broadcast-update", methods=["POST"])
-def updateBroadcast():
+# handles workbook event webhooks
+@app.route("/workbook", methods=["POST"])
+def workbook_event():
   if request.method == "POST":
-    log.logger.info(f"Broadcast workbook updated: {request}")
-    # request objects lacking this key automatically raise a KeyError and a 400 Bad Request response
-    workbook_id = request.form["resource_luid"]
-
     try:
-      # pushes updates to broadcast if webhook payload workbook id matches an existing broadcast id
-      broadcast.update(env_dict, workbook_id)
+      webhooks.workbook(request.form, env_dict)
     except Exception as error:
-      log.logger.error("Cannot update Broadcast: ", error)
+      log.logger.error("Cannot Process Webhook Event: ", error)
       return "500 INTERNAL SERVER ERROR", 500
     else:
+      # webhooks require a 2xx response else they deactivate after 4 delivery attempt failures
       return "202 ACCEPTED", 202
 
   else:
@@ -41,6 +37,7 @@ def updateBroadcast():
 @app.route("/workbook-refresh-fail", methods=["POST"])
 def notify():
   if request.method == "POST":  
+    log.logger.info(f"Workbook Refresh Failed: {request}")
     return "200 SUCCESS"
 
   else:
