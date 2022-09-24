@@ -1,4 +1,3 @@
-from werkzeug.exceptions import HTTPException
 from utils import log
 
 class Error(Exception):
@@ -63,6 +62,20 @@ class JWTDecodingError(Error):
     super().__init__(self.message)
 
 
+class WebhookEventTypeError(event_type):
+  """
+  Exception raised when a webhook event type is unexpected
+
+  Attributes:
+    key_attribute -- event_type
+  """
+
+  def __init__(self, event_type):
+    self.message = f"Unexpected Webhook Event: {event_type}"
+    self.log = log.logger.error(f"Unexpected Webhook Event: {event_type}")
+    super().__init__(self.message)
+
+
 class TableauRestAuthError(Error):
   """
   Exception raised when authentication to Tableau's REST API fails
@@ -118,34 +131,4 @@ class TableauRestPostBroadcast(Error):
     self.log = log.logger.error(f"Update Broadcast failed: {error}")
     super().__init__(self.message)
 
-
-# class TableauUpdateBroadcast(Error):
-#   """
-#   Exception raised when broadcast.update() methods fail
-
-#   Attributes:
-#     key_attribute -- error
-#   """
-
-#   def __init__(self, error):
-#     self.message = f"Method broadcast.update() failed: {error}"
-#     self.log = log.logger.error(f"Method broadcast.update() failed: {error}")
-#     super().__init__(self.message)
-#     return "500 INTERNAL SERVER ERROR", 500
-
-class test(HTTPException):
-  """
-  Exception raised when broadcast.update() methods fail
-
-  Attributes:
-    key_attribute -- error
-  """
-
-  def __init__(self):
-    self.message = f"test"
-    self.log = log.logger.error(f"test")
-    super().__init__(self.message)
-  
-  def error_code(self):
-    return "500 INTERNAL SERVER ERROR"
     
