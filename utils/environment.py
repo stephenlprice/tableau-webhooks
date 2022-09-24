@@ -2,9 +2,10 @@ from utils import exceptions, log
 
 # dictionary with required environment variables
 env_vars = [
-  "TABLEAU_DOMAIN",
+  "TABLEAU_SERVER",
   "TABLEAU_SITENAME",
   "TABLEAU_RESTAPI_VERSION",
+  "TABLEAU_SESSION_MINUTES",
   "TABLEAU_USERNAME",
   "TABLEAU_CA_CLIENT",
   "TABLEAU_CA_SECRET_ID",
@@ -16,7 +17,8 @@ env_vars = [
   "TWILIO_FROM_NUMBER",
   "TWILIO_TO_NUMBER",
   "WHATSAPP_FROM",
-  "WHATSAPP_TO"
+  "WHATSAPP_TO",
+  "FLASK_ENV"
 ]
 
 def validate(env_dict):
