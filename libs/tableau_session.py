@@ -1,5 +1,4 @@
 import tableau_rest
-from utils import exceptions
 
 class TableauEnv:
   """
@@ -25,7 +24,7 @@ class TableauEnv:
   
   # string representation of the object
   def __str__(self):
-    str = """
+    message = """
     Tableau Session for the site {0},
       ID: {1}
       Domain: {2}
@@ -33,7 +32,7 @@ class TableauEnv:
       Duration: {4} minutes
     """
 
-    return str.format(
+    return message.format(
       self.site_name, 
       self.site_id, 
       self.tableau_domain, 
@@ -49,4 +48,3 @@ class TableauEnv:
       tableau_rest.auth_pat
     elif self.session_type == 'password':
       pass
-    
