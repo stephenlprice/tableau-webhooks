@@ -3,29 +3,16 @@ import json
 from tableau_session import TableauEnv
 from utils import exceptions, log
 
-credentials = {
-  "site_id": "",
-  "api_key": ""
-}
-
-paths = {
-  "classic": "",
-  "new": "",
-}
-
-# create a new session object to store information needed for REST API calls
-def new_session(domain, site, api_version):
-  session = TableauEnv(domain, site, api_version)
-  return session
 
 # authentication into tableau's REST API with a valid JWT
 def auth_jwt(env_dict, jwt):
   # pass environment variables to create an object used to establish a session with a Tableau site
-  tableau_session = new_session(env_dict['TABLEAU_DOMAIN'], env_dict["TABLEAU_SITENAME"], env_dict['TABLEAU_RESTAPI_VERSION'])
-  
-  # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
-  # paths['classic'] = f"{env_dict['TABLEAU_DOMAIN']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
-  # paths['new'] = f"{env_dict['TABLEAU_DOMAIN']}/api/exp"
+  tableau_session = TableauEnv(
+    env_dict['TABLEAU_DOMAIN'], 
+    env_dict["TABLEAU_SITENAME"], 
+    env_dict['TABLEAU_RESTAPI_VERSION'], 
+    env_dict['TABLEAU_SESSION_MINUTES']
+  )
 
   # the path used for authentication
   auth_url = f'{tableau_session.paths.classic}/auth/signin'
@@ -57,9 +44,6 @@ def auth_jwt(env_dict, jwt):
     tableau_session.site_id = response_body["credentials"]["site"]["id"]
     tableau_session.api_key = response_body["credentials"]["token"]
 
-    # credentials["site_id"] = response_body["credentials"]["site"]["id"]
-    # credentials["api_key"] = response_body["credentials"]["token"]
-
     # JWT authentication returns a tableau_session object to be used in subsequent requests
     return tableau_session
 
@@ -67,10 +51,12 @@ def auth_jwt(env_dict, jwt):
 # authentication into tableau's REST API with a valid PAT
 def auth_pat(env_dict):
   # pass environment variables to create an object used to establish a session with a Tableau site
-  tableau_session = new_session(env_dict['TABLEAU_DOMAIN'], env_dict["TABLEAU_SITENAME"], env_dict['TABLEAU_RESTAPI_VERSION'])
-  # assign environment variables to built paths for classic and new resources https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_versions.htm
-  # paths['classic'] = f"{env_dict['TABLEAU_DOMAIN']}/api/{env_dict['TABLEAU_RESTAPI_VERSION']}"
-  # paths['new'] = f"{env_dict['TABLEAU_DOMAIN']}/api/exp"
+  tableau_session = TableauEnv(
+    env_dict['TABLEAU_DOMAIN'], 
+    env_dict["TABLEAU_SITENAME"], 
+    env_dict['TABLEAU_RESTAPI_VERSION'], 
+    env_dict['TABLEAU_SESSION_MINUTES']
+  )
 
   # the path used for authentication
   auth_url = f'{tableau_session.paths.classic}/auth/signin'
@@ -102,21 +88,19 @@ def auth_pat(env_dict):
     tableau_session.site_id = response_body["credentials"]["site"]["id"]
     tableau_session.api_key = response_body["credentials"]["token"]
 
-    # credentials["site_id"] = response_body["credentials"]["site"]["id"]
-    # credentials["api_key"] = response_body["credentials"]["token"]
-
     # JWT authentication returns a tableau_session object to be used in subsequent requests
     return tableau_session
 
 
 # get all views on the site
-def get_views_site(api_key):
-  views_url = f'{paths["new"]}/sites/{credentials["site_id"]}/views'
+def get_views_site(tableau_session):
+  views_url = f'{tableau_session.paths.classic}/sites/{tableau_session.site_id}/views'
+
 
   payload={}
   headers = {
     'Accept': 'application/json',
-    'X-Tableau-Auth': api_key
+    'X-Tableau-Auth': tableau_session.api_key
   }
 
   try:
@@ -128,20 +112,19 @@ def get_views_site(api_key):
   else:
     response_body = response.json()
     log.logger.info(f"Views on site: {json.dumps(response_body, indent=2, sort_keys=True)}")
-    print(f"Views on site: {json.dumps(response_body, indent=2, sort_keys=True)}")
     
     # successful request returns a list of views with workbook ids
     return response_body
 
 
 # get a list of broadcast views
-def get_broadcasts(api_key):
-  broadcasts_url = f'{paths["new"]}/sites/{credentials["site_id"]}/broadcasts/views'
+def get_broadcasts(tableau_session):
+  broadcasts_url = f'{tableau_session.paths.new}/sites/{tableau_session.site_id}/broadcasts/views'
 
   payload={}
   headers = {
     'Accept': 'application/json',
-    'X-Tableau-Auth': api_key,
+    'X-Tableau-Auth': tableau_session.api_key,
   }
 
   try:
@@ -153,15 +136,15 @@ def get_broadcasts(api_key):
   else:
     response_body = response.json()
     log.logger.info(f"Broadcasts on site: {json.dumps(response_body, indent=2, sort_keys=True)}")
-    print(f"Broadcasts on site: {json.dumps(response_body, indent=2, sort_keys=True)}")
 
+    # successful request returns a list of broadcast views with workbook ids
     return response_body
 
 
 # update the broadcast
-def update_broadcast(api_key, broadcasts, workbook_id, show_watermark, show_tabs):
+def update_broadcast(tableau_session, broadcasts, workbook_id, show_watermark, show_tabs):
   params = '?acceptTermsOfUse=true&overwrite=yes'
-  update_url = f'{paths["new"]}/sites/{credentials["site_id"]}/broadcasts/views{params}'
+  update_url = f'{tableau_session.new}/sites/{tableau_session.site_id}/broadcasts/views{params}'
 
   # get all current broadcast views
   for broadcast in broadcasts['broadcastViews']['broadcast']:
@@ -175,7 +158,7 @@ def update_broadcast(api_key, broadcasts, workbook_id, show_watermark, show_tabs
       })
       headers = {
         'Accept': 'application/json',
-        'X-Tableau-Auth': api_key,
+        'X-Tableau-Auth': tableau_session.api_key,
         'Content-Type': 'application/json',
       }
 
@@ -188,4 +171,3 @@ def update_broadcast(api_key, broadcasts, workbook_id, show_watermark, show_tabs
       else:
         response_body = response.json()
         log.logger.info(f"Broadcast updated: {json.dumps(response_body, indent=2, sort_keys=True)}")
-        print(f"Broadcast updated: {json.dumps(response_body, indent=2, sort_keys=True)}")
