@@ -156,7 +156,7 @@ def update_broadcast(tableau_session, broadcasts, workbook_id, show_watermark, s
         response = requests.request("POST", update_url, headers=headers, data=payload)
       
       except Exception as error:
-        raise exceptions.TableauRestPostBroadcast(error)
+        raise exceptions.TableauRestUpdateBroadcast(error)
       
       else:
         response_body = response.json()
