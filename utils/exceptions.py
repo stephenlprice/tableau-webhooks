@@ -62,7 +62,7 @@ class JWTDecodingError(Error):
     super().__init__(self.message)
 
 
-class WebhookEventTypeError(event_type):
+class WebhookEventTypeError(Error):
   """
   Exception raised when a webhook event type is unexpected
 
@@ -70,9 +70,9 @@ class WebhookEventTypeError(event_type):
     key_attribute -- event_type
   """
 
-  def __init__(self, event_type):
-    self.message = f"Unexpected Webhook Event: {event_type}"
-    self.log = log.logger.error(f"Unexpected Webhook Event: {event_type}")
+  def __init__(self, eventType):
+    self.message = f"Unexpected Webhook Event: {eventType}"
+    self.log = log.logger.error(f"Unexpected Webhook Event: {eventType}")
     super().__init__(self.message)
 
 
