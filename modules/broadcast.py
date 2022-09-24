@@ -14,7 +14,6 @@ def update(env_dict, workbook_id):
 
   except Exception as error:
     log.logger.error("Cannot update Broadcast: ", error)
-    
+
   else:
-    log.logger.info("Broadcast updated successful")
-  
+    log.logger.info("Broadcast update successful")
