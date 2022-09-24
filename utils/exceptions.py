@@ -118,7 +118,7 @@ class TableauRestGetBroadcast(Error):
     super().__init__(self.message)
 
 
-class TableauRestPostBroadcast(Error):
+class TableauRestUpdateBroadcast(Error):
   """
   Exception raised when update_broadcast requests to Tableau's REST API fail
 
