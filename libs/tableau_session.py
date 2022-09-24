@@ -1,4 +1,5 @@
 import tableau_rest
+import connected_apps
 
 class TableauEnv:
   """
@@ -11,40 +12,43 @@ class TableauEnv:
   """
 
   # assign values to properties on initialization and other operations
-  def __init__(self, tableau_domain, site_name, api_version, session_minutes, session_type):
-    self.paths.classic = f"{tableau_domain}/api/{api_version}"
-    self.paths.new = f"{tableau_domain}/api/exp"
-    self.site_name = site_name
+  def __init__(self, env_dict, session_type):    
+    self.site_name = env_dict['TABLEAU_SITENAME']
+    self.api_version = env_dict['TABLEAU_RESTAPI_VERSION']
+    self.paths.classic = f"{env_dict['TABLEAU_DOMAIN']}/api/{self.api_version}"
+    self.paths.new = f"{env_dict['TABLEAU_DOMAIN']}/api/exp"
     self.session_type = session_type
-    self.session_minutes = session_minutes
+    self.session_minutes = env_dict['TABLEAU_SESSION_MINUTES']
     self.session_date = None
     self.site_id = None
     self.api_key = None
     
-  
   # string representation of the object
   def __str__(self):
     message = """
     Tableau Session for the site {0},
       ID: {1}
-      Domain: {2}
-      Started: {3}
-      Duration: {4} minutes
+      REST API version: {2}
+      Domain: {3}
+      Started: {4}
+      Duration: {5} minutes
     """
 
     return message.format(
       self.site_name, 
       self.site_id, 
+      self.api_version,
       self.tableau_domain, 
       self.session_date, 
       self.session_minutes
     )
   
   # establishes a new session after timeout
-  def new_session(self):
+  def new_session(self, env_dict):
     if self.session_type == 'jwt':
-      tableau_rest.auth_jwt
+      jwt = connected_apps.encode(env_dict)
+      tableau_rest.auth_jwt(env_dict, jwt)
     elif self.session_type == 'pat':
-      tableau_rest.auth_pat
+      tableau_rest.auth_pat(env_dict)
     elif self.session_type == 'password':
       pass
