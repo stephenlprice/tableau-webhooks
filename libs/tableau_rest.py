@@ -33,7 +33,7 @@ def auth_jwt(env_dict, jwt):
 
   else:
     response_body = response.json()
-    log.logger.info("Successful authentication to Tableau REST API: {0}".format(json.dumps(response_body, indent=2, sort_keys=True)))
+    log.logger.info("Successful authentication to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
 
     # assign id and api key values from response
     tableau_session.site_id = response_body["credentials"]["site"]["id"]
@@ -72,7 +72,7 @@ def auth_pat(env_dict):
 
   else:
     response_body = response.json()
-    log.logger.info(f"Successful authentication to Tableau REST API: {0}".format(json.dumps(response_body, indent=2, sort_keys=True)))
+    log.logger.info("Successful authentication to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
 
     # assign id and api key values from response
     tableau_session.site_id = response_body["credentials"]["site"]["id"]
@@ -101,7 +101,7 @@ def get_views_site(tableau_session):
 
   else:
     response_body = response.json()
-    log.logger.info(f"Views on site: {0}".format(json.dumps(response_body, indent=2, sort_keys=True)))
+    log.logger.info("Views on site: %s" % json.dumps(response_body, indent=2, sort_keys=True))
     
     # successful request returns a list of views with workbook ids
     return response_body
@@ -125,7 +125,7 @@ def get_broadcasts(tableau_session):
   
   else:
     response_body = response.json()
-    log.logger.info(f"Broadcasts on site: {0}".format(json.dumps(response_body, indent=2, sort_keys=True)))
+    log.logger.info("Broadcasts on site: %s" % json.dumps(response_body, indent=2, sort_keys=True))
 
     # successful request returns a list of broadcast views with workbook ids
     return response_body
@@ -160,4 +160,4 @@ def update_broadcast(tableau_session, broadcasts, workbook_id, show_watermark, s
       
       else:
         response_body = response.json()
-        log.logger.info(f"Broadcast updated: {0}".format(json.dumps(response_body, indent=2, sort_keys=True)))
+        log.logger.info("Broadcast updated: %s" % json.dumps(response_body, indent=2, sort_keys=True))
