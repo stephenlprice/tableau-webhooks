@@ -23,15 +23,19 @@ def workbook_event():
     log.logger.info("request: %s" % request.form)
     for k in request.form:
       log.logger.info("request.form: %s, %s" % k, request.form[k])
-    try:
+
       webhooks.workbook(request.form, env_dict)
-    except Exception as error:
-      log.logger.error("Cannot Process Webhook Event: %s" % error)
-      return "500 INTERNAL SERVER ERROR", 500
-    else:
-      # webhooks require a 2xx response else they deactivate after 4 delivery attempt failures
-      # (https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html#tableau-webhooks-behavior)
+
       return "202 ACCEPTED", 202
+    # try:
+    #   webhooks.workbook(request.form, env_dict)
+    # except Exception as error:
+    #   log.logger.error("Cannot Process Webhook Event: %s" % error)
+    #   return "500 INTERNAL SERVER ERROR", 500
+    # else:
+    #   # webhooks require a 2xx response else they deactivate after 4 delivery attempt failures
+    #   # (https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html#tableau-webhooks-behavior)
+    #   return "202 ACCEPTED", 202
 
   else:
     # any other methods are not supported
