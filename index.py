@@ -22,7 +22,7 @@ def workbook_event():
     log.logger.info("request: %s" % request)
     log.logger.info("request: %s" % request.form)
     for k in request.form:
-      print(k, request.form[k])
+      log.logger.info("request.form: %s, %s" % k, request.form[k])
     try:
       webhooks.workbook(request.form, env_dict)
     except Exception as error:
