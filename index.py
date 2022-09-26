@@ -19,16 +19,10 @@ app = Flask(__name__)
 @app.route("/webhook/workbook", methods=["POST"])
 def workbook_event():
   if request.method == "POST":
-    log.logger.info("request: %s" % request)
-    log.logger.info("request.form: %s" % request.form)
-    log.logger.info("request.get_json(): %s" % request.get_json())
 
-    for k in request.form:
-      log.logger.info("request.form: %s, %s" % k, request.form[k])
+    webhooks.workbook(request.get_json(), env_dict)
 
-      webhooks.workbook(request.form, env_dict)
-
-      return "202 ACCEPTED", 202
+    return "202 ACCEPTED", 202
     # try:
     #   webhooks.workbook(request.form, env_dict)
     # except Exception as error:
