@@ -35,7 +35,7 @@ def encode(env_dict):
     raise exceptions.JWTEncodingError(error)
   
   else:
-    log.logger.info("SUCCESS: JWT encoded: {0}".format(token))
+    log.logger.info("SUCCESS: JWT encoded: %s" % token)
     # decode the token for access logging and testing
     decode(token, connected_app_secret, payload_data["aud"], header_data["alg"])
     return token
@@ -55,4 +55,4 @@ def decode(token, connected_app_secret, audience, algorithms):
     raise exceptions.JWTDecodingError(error)
 
   else:
-    log.logger.info('SUCCESS: JWT decoded: {0}'.format(decodedToken))
+    log.logger.info("SUCCESS: JWT decoded: %s" % token)
