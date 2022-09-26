@@ -1,5 +1,5 @@
-import tableau_rest
-import connected_apps
+from libs import tableau_rest
+from libs import connected_apps
 
 class TableauEnv:
   """
