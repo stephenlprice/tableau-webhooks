@@ -2,7 +2,7 @@ from utils import exceptions, log
 
 # dictionary with required environment variables
 env_vars = [
-  "TABLEAU_SERVER",
+  "TABLEAU_DOMAIN",
   "TABLEAU_SITENAME",
   "TABLEAU_RESTAPI_VERSION",
   "TABLEAU_SESSION_MINUTES",
