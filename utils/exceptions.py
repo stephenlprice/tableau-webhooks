@@ -14,8 +14,8 @@ class EnvironmentAttributeError(Error):
 
   def __init__(self, environment_variable):
     self.environment_variable = environment_variable
-    self.message = "Environment variable value for key {0} was not assigned.".format(environment_variable)
-    self.log = log.logger.error("Environment variable value for key {0} was not assigned.".format(environment_variable))
+    self.message = "Environment variable value for key %s was not assigned." % environment_variable
+    self.log = log.logger.error("Environment variable value for key %s was not assigned." % environment_variable)
     super().__init__(self.message)
 
 
@@ -29,8 +29,8 @@ class EnvironmentKeyError(Error):
 
   def __init__(self, vars):
     self.environment_variable = vars
-    self.message = "Environment variable {0} was not declared.".format(vars)
-    self.log = log.logger.error("Environment variable {0} was not declared.".format(vars))
+    self.message = "Environment variable %s was not declared." % vars
+    self.log = log.logger.error("Environment variable %s was not declared." % vars)
     super().__init__(self.message)
 
 
@@ -43,8 +43,8 @@ class JWTEncodingError(Error):
   """
 
   def __init__(self, error):
-    self.message = "Cannot encode JWT: {0}".format(error)
-    self.log = log.logger.error("Cannot encode JWT: {0}".format(error))
+    self.message = "Cannot encode JWT: %s" % error
+    self.log = log.logger.error("Cannot encode JWT: %s" % error)
     super().__init__(self.message)
 
 
@@ -57,8 +57,8 @@ class JWTDecodingError(Error):
   """
 
   def __init__(self, error):
-    self.message = "Cannot decode JWT: {0}".format(error)
-    self.log = log.logger.error("Cannot decode JWT: {0}".format(error))
+    self.message = "Cannot decode JWT: %s" % error
+    self.log = log.logger.error("Cannot decode JWT: %s" % error)
     super().__init__(self.message)
 
 
@@ -71,8 +71,8 @@ class WebhookEventTypeError(Error):
   """
 
   def __init__(self, eventType):
-    self.message = "Unexpected Webhook Event: {0}".format(eventType)
-    self.log = log.logger.error("Unexpected Webhook Event: {0}".format(eventType))
+    self.message = "Unexpected Webhook Event: %s" % eventType
+    self.log = log.logger.error("Unexpected Webhook Event: %s" % eventType)
     super().__init__(self.message)
 
 
@@ -85,8 +85,8 @@ class TableauRestAuthError(Error):
   """
 
   def __init__(self, error):
-    self.message = "Authentication to Tableau REST API failed: {0}".format(error)
-    self.log = log.logger.error("Authentication to Tableau REST API failed: {0}".format(error))
+    self.message = "Authentication to Tableau REST API failed: %s" % error
+    self.log = log.logger.error("Authentication to Tableau REST API failed: %s" % error)
     super().__init__(self.message)
 
 
@@ -99,8 +99,8 @@ class TableauRestError(Error):
   """
 
   def __init__(self, error):
-    self.message = "Request to Tableau REST API failed: {0}".format(error)
-    self.log = log.logger.error("Request to Tableau REST API failed: {0}".format(error))
+    self.message = "Request to Tableau REST API failed: %s" % error
+    self.log = log.logger.error("Request to Tableau REST API failed: %s" % error)
     super().__init__(self.message)
 
 
@@ -113,8 +113,8 @@ class TableauRestGetBroadcast(Error):
   """
 
   def __init__(self, error):
-    self.message = "Get Broadcast failed: {0}".format(error)
-    self.log = log.logger.error("Get Broadcast failed: {0}".format(error))
+    self.message = "Get Broadcast failed: %s" % error
+    self.log = log.logger.error("Get Broadcast failed: %s" % error)
     super().__init__(self.message)
 
 
@@ -127,8 +127,8 @@ class TableauRestUpdateBroadcast(Error):
   """
 
   def __init__(self, error):
-    self.message = "Update Broadcast failed: {0}".format(error)
-    self.log = log.logger.error("Update Broadcast failed: {0}".format(error))
+    self.message = "Update Broadcast failed: %s" % error
+    self.log = log.logger.error("Update Broadcast failed: %s" % error)
     super().__init__(self.message)
 
     
