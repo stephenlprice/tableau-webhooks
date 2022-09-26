@@ -20,7 +20,9 @@ app = Flask(__name__)
 def workbook_event():
   if request.method == "POST":
     log.logger.info("request: %s" % request)
-    log.logger.info("request: %s" % request.form)
+    log.logger.info("request.form: %s" % request.form)
+    log.logger.info("request.get_json(): %s" % request.get_json())
+
     for k in request.form:
       log.logger.info("request.form: %s, %s" % k, request.form[k])
 
