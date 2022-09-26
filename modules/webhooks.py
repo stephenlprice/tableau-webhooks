@@ -16,7 +16,7 @@ def duplicate(payload):
 # handle workbook events
 def workbook(payload, env_dict):
   if duplicate(payload) == False:
-    log.logger.warning(payload)
+    log.logger.info(payload)
     # request objects lacking these keys automatically raise a KeyError
     event_type = payload["event_type"]
     workbook_id = payload["resource_luid"]
