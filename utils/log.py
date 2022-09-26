@@ -8,7 +8,8 @@ logger.setLevel(logging.DEBUG)
 # create formatter
 formatter = logging.Formatter(
   '%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s', 
-  datefmt='%Y-%m-%d:%H:%M:%S'
+  datefmt='%Y-%m-%d:%H:%M:%S',
+  style='{'
 )
 
 # create stream handler and set level to warning
