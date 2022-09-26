@@ -22,7 +22,7 @@ def workbook_event():
     try:
       webhooks.workbook(request.form, env_dict)
     except Exception as error:
-      log.logger.error("Cannot Process Webhook Event: ", error)
+      log.logger.error("Cannot Process Webhook Event: %s" % error)
       return "500 INTERNAL SERVER ERROR", 500
     else:
       # webhooks require a 2xx response else they deactivate after 4 delivery attempt failures
