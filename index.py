@@ -16,22 +16,13 @@ environment.validate(env_dict)
 app = Flask(__name__)
 
 # handles workbook event webhooks
-@app.route("/webhook/workbook", methods=["POST"])
+@app.route("/webhook", methods=["POST"])
 def workbook_event():
   if request.method == "POST":
 
-    webhooks.workbook(request.get_json(), env_dict)
+    webhooks.handleEvent(request.get_json(), env_dict)
 
     return "202 ACCEPTED", 202
-    # try:
-    #   webhooks.workbook(request.form, env_dict)
-    # except Exception as error:
-    #   log.logger.error("Cannot Process Webhook Event: %s" % error)
-    #   return "500 INTERNAL SERVER ERROR", 500
-    # else:
-    #   # webhooks require a 2xx response else they deactivate after 4 delivery attempt failures
-    #   # (https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html#tableau-webhooks-behavior)
-    #   return "202 ACCEPTED", 202
 
   else:
     # any other methods are not supported
