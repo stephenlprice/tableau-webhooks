@@ -1,13 +1,13 @@
 import requests
 import json
-from tableau_session import TableauEnv
+from libs import session
 from utils import exceptions, log
 
 
 # authentication into tableau's REST API with a valid JWT
 def auth_jwt(env_dict, jwt):
   # pass environment variables to create an object used to establish a session with a Tableau site
-  tableau_session = TableauEnv(env_dict, 'jwt')
+  tableau_session = session.TableauEnv(env_dict, 'jwt')
 
   # the path used for authentication
   auth_url = f'{tableau_session.paths.classic}/auth/signin'
@@ -46,7 +46,7 @@ def auth_jwt(env_dict, jwt):
 # authentication into tableau's REST API with a valid PAT
 def auth_pat(env_dict):
   # pass environment variables to create an object used to establish a session with a Tableau site
-  tableau_session = TableauEnv(env_dict, 'pat')
+  tableau_session = session.TableauEnv(env_dict, 'pat')
 
   # the path used for authentication
   auth_url = f'{tableau_session.paths.classic}/auth/signin'
