@@ -62,6 +62,20 @@ class JWTDecodingError(Error):
     super().__init__(self.message)
 
 
+class WebhookEventResourceError(Error):
+  """
+  Exception raised when a webhook resource is unexpected
+
+  Attributes:
+    key_attribute -- resource
+  """
+
+  def __init__(self, resource):
+    self.message = "Unexpected Webhook Resource: %s" % resource
+    self.log = log.logger.error("Unexpected Webhook Resource: %s" % resource)
+    super().__init__(self.message)
+
+
 class WebhookEventTypeError(Error):
   """
   Exception raised when a webhook event type is unexpected
