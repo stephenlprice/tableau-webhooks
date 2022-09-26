@@ -19,6 +19,8 @@ app = Flask(__name__)
 @app.route("/webhook/workbook", methods=["POST"])
 def workbook_event():
   if request.method == "POST":
+    log.logger.warning("request: %s" % request)
+    log.logger.warning("request: %s" % request.form)
     try:
       webhooks.workbook(request.form, env_dict)
     except Exception as error:
