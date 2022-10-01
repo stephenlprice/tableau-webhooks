@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, request
-from modules import webhooks
+from modules import webhooks, authenticate
 from utils import environment, log
 
 # load environment files from .env
@@ -29,6 +29,19 @@ def workbook_event():
     log.logger.error("400 BAD REQUEST: HTTP method not supported")
     return "400 BAD REQUEST: HTTP method not supported", 400
 
+# receives a session request and returns a temporary API key 
+@app.route("/auth", methods=["POST"])
+def authenticate():
+  if request.method == "POST":
+
+    authenticate.request(request.get_json(), env_dict)
+
+    return "201 CREATED", 201
+
+  else:
+    # any other methods are not supported
+    log.logger.error("400 BAD REQUEST: HTTP method not supported")
+    return "400 BAD REQUEST: HTTP method not supported", 400
 
 if __name__ == "__main__":
   app.run()
