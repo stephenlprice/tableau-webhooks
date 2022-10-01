@@ -4,7 +4,7 @@ from utils import exceptions, log
 
 
 # encode the JWT with declared payload, secret and headers
-def encode(env_dict):
+def encode(payload, env_dict):
   # tableau connected app variables (JWT)
   # (https://help.tableau.com/current/online/en-us/connected_apps.htm#step-3-configure-the-jwt)
   header_data = {
