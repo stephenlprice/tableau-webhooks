@@ -21,7 +21,7 @@ class TableauEnv:
     self.session_minutes = env_dict['TABLEAU_SESSION_MINUTES']
     self.session_date = None
     self.site_id = None
-    self.api_key = None
+    self.token = None
     
   # string representation of the object
   def __str__(self):
