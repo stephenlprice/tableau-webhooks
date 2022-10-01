@@ -13,15 +13,25 @@ def handleEvent(payload, env_dict):
     if event_type == "Test":
       log.logger.info("Test Request Received")
       return
+    elif "workbook" in event_type.lower():
+      workbook(payload, env_dict)
+    elif "admin" in event_type.lower():
+      datasource(payload, env_dict)
+    elif "user" in event_type.lower():
+      user(payload, env_dict)
     else:
-      if resource == "WORKBOOK":
-        workbook(payload, env_dict)
-      elif resource == "DATASOURCE":
-        datasource(payload, env_dict)
-      elif resource == "USER":
-        user(payload, env_dict)
-      else:
-        raise exceptions.WebhookEventResourceError(resource)
+      raise exceptions.WebhookEventTypeError(event_type)
+
+    # commented out until resource enums are clarified in documentation
+    # else:
+    #   if resource == "WORKBOOK":
+    #     workbook(payload, env_dict)
+    #   elif resource == "DATASOURCE":
+    #     datasource(payload, env_dict)
+    #   elif resource == "USER":
+    #     user(payload, env_dict)
+    #   else:
+    #     raise exceptions.WebhookEventResourceError(resource)
   else:
     # ignore if the webhook payload is a duplicate
     return
