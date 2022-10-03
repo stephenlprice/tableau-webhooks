@@ -33,7 +33,7 @@ def auth_jwt(env_dict, jwt):
 
   else:
     response_body = response.json()
-    log.logger.info("Successful authentication to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
+    log.logger.info("Authentication attempt to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
 
     # assign id and api key values from response
     tableau_session.site_id = response_body["credentials"]["site"]["id"]
@@ -64,6 +64,8 @@ def auth_pat(env_dict):
     'Accept': 'application/json'
   }
 
+  log.logger.info('Auth Payload: %s' % auth_payload)
+
   try:
     response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PAT_SECRET"], env_dict["TABLEAU_SITENAME"]))
 
@@ -72,7 +74,7 @@ def auth_pat(env_dict):
 
   else:
     response_body = response.json()
-    log.logger.info("Successful authentication to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
+    log.logger.info("Authentication attempt to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
 
     # assign id and api key values from response
     tableau_session.site_id = response_body["credentials"]["site"]["id"]
