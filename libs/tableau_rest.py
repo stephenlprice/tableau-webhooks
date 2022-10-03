@@ -64,10 +64,13 @@ def auth_pat(env_dict):
     'Accept': 'application/json'
   }
 
-  log.logger.info('Auth Payload: %s' % auth_payload)
-
   try:
     response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PAT_SECRET"], env_dict["TABLEAU_SITENAME"]))
+
+    # TODOS: create a debug log for all requests using these objects
+    # log.logger.info('Auth URL: %s' % response.request.url)
+    # log.logger.info('Auth Payload: %s' % response.request.body)
+    # log.logger.info('Auth Payload: %s' % response.request.headers)
 
   except Exception as error:
     raise exceptions.TableauRestAuthError(error)
