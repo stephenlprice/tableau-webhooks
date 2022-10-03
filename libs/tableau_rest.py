@@ -10,7 +10,7 @@ def auth_jwt(env_dict, jwt):
   tableau_session = session.TableauEnv(env_dict, 'jwt')
 
   # the path used for authentication
-  auth_url = f'{tableau_session.paths.classic}/auth/signin'
+  auth_url = f'{tableau_session.paths["classic"]}/auth/signin'
 
   auth_payload = """
   <tsRequest>
@@ -49,7 +49,7 @@ def auth_pat(env_dict):
   tableau_session = session.TableauEnv(env_dict, 'pat')
 
   # the path used for authentication
-  auth_url = f'{tableau_session.paths.classic}/auth/signin'
+  auth_url = f'{tableau_session.paths["classic"]}/auth/signin'
 
   auth_payload = """
   <tsRequest>
@@ -84,8 +84,7 @@ def auth_pat(env_dict):
 
 # get all views on the site
 def get_views_site(tableau_session):
-  views_url = f'{tableau_session.paths.classic}/sites/{tableau_session.site_id}/views'
-
+  views_url = f'{tableau_session.paths["classic"]}/sites/{tableau_session.site_id}/views'
 
   payload={}
   headers = {
@@ -109,7 +108,7 @@ def get_views_site(tableau_session):
 
 # get a list of broadcast views
 def get_broadcasts(tableau_session):
-  broadcasts_url = f'{tableau_session.paths.new}/sites/{tableau_session.site_id}/broadcasts/views'
+  broadcasts_url = f'{tableau_session.paths["new"]}/sites/{tableau_session.site_id}/broadcasts/views'
 
   payload={}
   headers = {
@@ -134,7 +133,7 @@ def get_broadcasts(tableau_session):
 # update the broadcast
 def update_broadcast(tableau_session, broadcasts, workbook_id, show_watermark, show_tabs):
   params = '?acceptTermsOfUse=true&overwrite=yes'
-  update_url = f'{tableau_session.new}/sites/{tableau_session.site_id}/broadcasts/views{params}'
+  update_url = f'{tableau_session.paths["new"]}/sites/{tableau_session.site_id}/broadcasts/views{params}'
 
   # get all current broadcast views
   for broadcast in broadcasts['broadcastViews']['broadcast']:
