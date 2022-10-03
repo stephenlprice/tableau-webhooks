@@ -15,8 +15,10 @@ class TableauEnv:
   def __init__(self, env_dict, session_type):    
     self.site_name = env_dict['TABLEAU_SITENAME']
     self.api_version = env_dict['TABLEAU_RESTAPI_VERSION']
-    self.paths.classic = f"{env_dict['TABLEAU_DOMAIN']}/api/{self.api_version}"
-    self.paths.new = f"{env_dict['TABLEAU_DOMAIN']}/api/exp"
+    self.paths = {
+      "classic": f"{env_dict['TABLEAU_DOMAIN']}/api/{self.api_version}",
+      "new": f"{env_dict['TABLEAU_DOMAIN']}/api/exp"
+    }
     self.session_type = session_type
     self.session_minutes = env_dict['TABLEAU_SESSION_MINUTES']
     self.session_date = None
