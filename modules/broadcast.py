@@ -13,7 +13,7 @@ def update(env_dict, workbook_id):
     tableau_rest.update_broadcast(tableau_session, broadcasts, workbook_id, False, False)
 
   except Exception as error:
-    log.logger.error("Cannot update Broadcast: ", error)
+    log.logger.error("Cannot update Broadcast: %s" % error)
 
   else:
     log.logger.info("Broadcast update successful")
