@@ -3,7 +3,7 @@ import json
 from libs import session
 from utils import exceptions, log
 
-# outputs to stderr RESTful requests to debug behavior
+# outputs RESTful requests to stderr to debug behavior
 def debug_request(response):
   log.logger.debug(
     """
