@@ -3,6 +3,26 @@ import json
 from libs import session
 from utils import exceptions, log
 
+# outputs to stderr RESTful requests to debug behavior
+def debug_request(response):
+  log.logger.debug(
+    """
+    *** Request ***
+    --------------------------------
+    %(method)s %(url)s
+    Headers: 
+    %(header)s
+    Body: 
+    %(body)s
+    --------------------------------
+    """ % {
+    "method": response.request.method,
+    "url": response.request.url,
+    "header": response.request.headers,
+    "body": response.request.body
+    }
+  )
+
 
 # authentication into tableau's REST API with a valid JWT
 def auth_jwt(env_dict, jwt):
@@ -28,12 +48,14 @@ def auth_jwt(env_dict, jwt):
   try:
     response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(jwt, tableau_session.site_name))
 
+    debug_request(response)
+
   except Exception as error:
     raise exceptions.TableauRestAuthError(error)
 
   else:
     response_body = response.json()
-    log.logger.info("Authentication attempt to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
+    log.logger.debug("Authentication attempt to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
 
     # assign id and api key values from response
     tableau_session.site_id = response_body["credentials"]["site"]["id"]
@@ -67,17 +89,14 @@ def auth_pat(env_dict):
   try:
     response = requests.request("POST", auth_url, headers=auth_headers, data=auth_payload.format(env_dict["TABLEAU_PAT_NAME"], env_dict["TABLEAU_PAT_SECRET"], env_dict["TABLEAU_SITENAME"]))
 
-    # TODOS: create a debug log for all requests using these objects
-    # log.logger.info('Auth URL: %s' % response.request.url)
-    # log.logger.info('Auth Payload: %s' % response.request.body)
-    # log.logger.info('Auth Payload: %s' % response.request.headers)
+    debug_request(response)
 
   except Exception as error:
     raise exceptions.TableauRestAuthError(error)
 
   else:
     response_body = response.json()
-    log.logger.info("Authentication attempt to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
+    log.logger.debug("Authentication attempt to Tableau REST API: %s" % json.dumps(response_body, indent=2, sort_keys=True))
 
     # assign id and api key values from response
     tableau_session.site_id = response_body["credentials"]["site"]["id"]
@@ -100,12 +119,14 @@ def get_views_site(tableau_session):
   try:
     response = requests.request("GET", views_url, headers=headers, data=payload)
 
+    debug_request(response)
+
   except Exception as error:
     raise exceptions.TableauRestError(error)
 
   else:
     response_body = response.json()
-    log.logger.info("Views on site: %s" % json.dumps(response_body, indent=2, sort_keys=True))
+    log.logger.debug("Views on site: %s" % json.dumps(response_body, indent=2, sort_keys=True))
     
     # successful request returns a list of views with workbook ids
     return response_body
@@ -124,12 +145,14 @@ def get_broadcasts(tableau_session):
   try:
     response = requests.request("GET", broadcasts_url, headers=headers, data=payload)
 
+    debug_request(response)
+
   except Exception as error:
     raise exceptions.TableauRestGetBroadcast(error)
   
   else:
     response_body = response.json()
-    log.logger.info("Broadcasts on site: %s" % json.dumps(response_body, indent=2, sort_keys=True))
+    log.logger.debug("Broadcasts on site: %s" % json.dumps(response_body, indent=2, sort_keys=True))
 
     # successful request returns a list of broadcast views with workbook ids
     return response_body
@@ -158,10 +181,12 @@ def update_broadcast(tableau_session, broadcasts, workbook_id, show_watermark, s
 
       try:
         response = requests.request("POST", update_url, headers=headers, data=payload)
+
+        debug_request(response)
       
       except Exception as error:
         raise exceptions.TableauRestUpdateBroadcast(error)
       
       else:
         response_body = response.json()
-        log.logger.info("Broadcast updated: %s" % json.dumps(response_body, indent=2, sort_keys=True))
+        log.logger.debug("Broadcast updated: %s" % json.dumps(response_body, indent=2, sort_keys=True))
