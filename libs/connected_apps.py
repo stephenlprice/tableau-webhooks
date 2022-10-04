@@ -55,4 +55,4 @@ def decode(token, connected_app_secret, audience, algorithms):
     raise exceptions.JWTDecodingError(error)
 
   else:
-    log.logger.debug("SUCCESS: JWT decoded: %s" % token)
+    log.logger.debug("SUCCESS: JWT decoded: %s" % decodedToken)
