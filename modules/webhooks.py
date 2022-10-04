@@ -5,10 +5,14 @@ from utils import log, exceptions
 # entry point to webhooks handling, determines which resource fired the webhook
 def handleEvent(payload, env_dict):
   # verify that the webhook request is not a duplicate
-  if duplicate(payload) == False:
+  if handle_duplicate(payload) == False:
     # request objects lacking these keys automatically raise a KeyError
     event_type = payload["event_type"]
     resource = payload["resource"]
+
+    # output event details for debugging in development environment
+    debug_event(payload)
+
     # ignore test requests (Flask will send an HTTP 202 response)
     if event_type == "Test":
       log.logger.debug("Test Request Received")
@@ -39,7 +43,7 @@ def handleEvent(payload, env_dict):
 
 # handle duplicate payloads from the same Tableau event 
 # (https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html#tableau-webhooks-behavior)
-def duplicate(payload):
+def handle_duplicate(payload):
   previous_payload = None
   if previous_payload != payload:
     # store the new payload for future duplicate filtering
@@ -47,6 +51,14 @@ def duplicate(payload):
     return False
   else:
     return True
+
+# outputs webhook events to stderr to debug behavior
+def debug_event(payload):
+  log.logger.debug("%(event_type)s: %(payload)s" % {
+    "event_type": payload["event_type"],
+    "payload": json.dumps(payload, indent=2, sort_keys=True)
+    }
+  )
 
 
 # handle workbook events
@@ -57,36 +69,34 @@ def workbook(payload, env_dict):
 
   # handle different webhook event types
   if event_type == "WorkbookRefreshSucceeded":
-    log.logger.debug("Workbook Refresh Succeeded: %s" % json.dumps(payload, indent=2, sort_keys=True))
     # determine if the workbook should update a broadcast
     broadcast.update(env_dict, workbook_id)
 
   elif event_type == "WorkbookRefreshFailed":
-    log.logger.debug("Workbook Refresh Failed: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   elif event_type == "WorkbookRefreshStarted":
-    log.logger.debug("Workbook Refresh Started: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   elif event_type == "WorkbookUpdated":
-    log.logger.debug("Workbook Updated: %s" % json.dumps(payload, indent=2, sort_keys=True))
     # determine if the workbook should update a broadcast
     broadcast.update(env_dict, workbook_id)
   
   elif event_type == "WorkbookCreated":
-    log.logger.debug("Workbook Created: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
   
   elif event_type == "WorkbookDeleted":
-    log.logger.debug("Workbook Deleted: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   # label events can fire for both workbook or datasource resources
   elif event_type == "LabelCreated":
-    log.logger.debug("Label Created: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
   
   elif event_type == "LabelUpdated":
-    log.logger.debug("Label Updated: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
   
   elif event_type == "LabelDeleted":
-    log.logger.debug("Label Deleted: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   else:
     raise exceptions.WebhookEventTypeError(event_type)
@@ -100,32 +110,32 @@ def datasource(payload, env_dict):
 
   # handle different webhook event types
   if event_type == "DatasourceRefreshSucceeded":
-    log.logger.debug("Datasource Refresh Succeeded: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   elif event_type == "DatasourceRefreshFailed":
-    log.logger.debug("Datasource Refresh Failed: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   elif event_type == "DatasourceRefreshStarted":
-    log.logger.debug("Datasource Refresh Started: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   elif event_type == "DatasourceUpdated":
-    log.logger.debug("Datasource Updated: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
   
   elif event_type == "DatasourceCreated":
-    log.logger.debug("Datasource Created: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
   
   elif event_type == "DatasourceDeleted":
-    log.logger.debug("Datasource Deleted: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   # label events can fire for both workbook or datasource resources
   elif event_type == "LabelCreated":
-    log.logger.debug("Label Created: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
   
   elif event_type == "LabelUpdated":
-    log.logger.debug("Label Updated: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
   
   elif event_type == "LabelDeleted":
-    log.logger.debug("Label Deleted: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   else:
     raise exceptions.WebhookEventTypeError(event_type)
@@ -139,10 +149,10 @@ def user(payload, env_dict):
 
   # handle different webhook event types
   if event_type == "AdminPromoted":
-    log.logger.debug("Admin Promoted: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   elif event_type == "AdminDemoted":
-    log.logger.debug("Admin Demoted: %s" % json.dumps(payload, indent=2, sort_keys=True))
+    pass
 
   else:
     raise exceptions.WebhookEventTypeError(event_type)
