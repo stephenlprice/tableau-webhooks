@@ -16,4 +16,4 @@ def update(env_dict, workbook_id):
     log.logger.error("Cannot update Broadcast: %s" % error)
 
   else:
-    log.logger.info("Broadcast update successful")
+    log.logger.debug("Broadcast flow complete")
