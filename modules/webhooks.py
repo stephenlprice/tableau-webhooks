@@ -19,7 +19,7 @@ def handleEvent(payload, env_dict):
       return
     elif "workbook" in event_type.lower():
       workbook(payload, env_dict)
-    elif "admin" in event_type.lower():
+    elif "datasource" in event_type.lower():
       datasource(payload, env_dict)
     elif "user" in event_type.lower():
       user(payload, env_dict)
