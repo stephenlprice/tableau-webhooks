@@ -95,7 +95,7 @@ This project was built with [Anaconda](https://www.anaconda.com/) to manage Pyth
 Managing Python environments is a best practice and well described by the following [xkcd 1987](https://xkcd.com/1987/):
 
 <p align="center">
-<img src="assets/images/xkcd-1987.png" alt="fishing hooks">
+<img src="assets/images/xkcd-1987.png" alt="xkcd 1987 comic">
 </p>
 
 ###### NOTE: Superfund sites are bad. Do yourself a favor and just get `conda`.
@@ -196,11 +196,13 @@ curl "http://127.0.0.1:8000/webhook" \
 
 ## Postman Collection
 
-![postman logo](assets/images/postman.png)
+<p align="center">
+<img src="assets/images/postman.png" alt="xkcd 1987 comic">
+</p>
 
-This repository contains a [Postman](https://www.postman.com/) collection and environment file to help you interact with [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) which is available on either Tableau Server or Tableau Online (*[see requirements](#requirements)*). 
+This repository contains a [Postman](https://www.postman.com/) collection and environment file to help you interact with [REST API endpoints](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_notifications.htm#create_webhook) used to configure Tableau webhooks.
 
-Once you have added a webhook to the Tableau site or server, you can test it using the `test` request provided in the collection. It is also useful to get a `list` of webhooks registered on the server to get the ID of a webhook that you wish to test.
+Once you have added a webhook to a Tableau site, you can test it using the `test` request provided in the collection. It is also useful to get a `list` of webhooks registered on the server to get the ID of a webhook that you wish to test.
 
 ### Environment file
 
@@ -208,6 +210,11 @@ The Postman collection was built to leverage the provided environment file which
 
 > ##### *__WARNING__: Do not push usernames, passwords or personal access tokens to Github as they will be accessible by crawlers and is a well known security risk. You can fork environment files for local use and keep an empty template available on the repository for others to use.*
 > 
+
+</br>
+
+Postman will also help you test the behavior you have written for each event type in `webhooks.py`. You can send `POST` requests to the `http://127.0.0.1:8000/webhook` URL and create test payloads obtained from the [Webhooks API documentation](https://www.tableau.com/developer/tools/webhook-api) or replace test values with real values from resources on your Tableau environment to observe how real workflows run.
+
 </br>
 
 ### Authentication
