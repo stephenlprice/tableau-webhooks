@@ -127,6 +127,11 @@ It is possible to recreate this environment without Anaconda, using something li
 
 To protect private data such as PATs, this project relies on `environment variables`, that way this information is available in development and production environments without pushing them to the public Github repository (via `.gitignore`). If you are new to this concept I highly recommend that you read [Twilio's blog post](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) on the subject. The `python-dotenv` package will load these variables into the server when initialized.
 
+```bash
+# create a .env file
+touch .env
+```
+
 Your `.env` file must contain all of the following variables:
 
 ```bash
