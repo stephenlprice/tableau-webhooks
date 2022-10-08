@@ -6,7 +6,7 @@ This is a Tableau automation server leveraging the [Webhooks API](https://www.ta
 <img src="assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg" alt="fishing hooks">
 </p>
 
-<h6><i><strong>Image Source</strong>: <a href="https://unsplash.com/photos/viq9Ztqi3Vc">unsplash.com (Anne Nygard)</a></i></h6>
+<h6><i><strong>Image Source</strong>: <a href="https://unsplash.com/photos/viq9Ztqi3Vc" target="_blank">unsplash.com (Anne Nygard)</a></i></h6>
 
 </br>
 
@@ -226,7 +226,7 @@ Refer to the documentation for [REST API authentication](https://help.tableau.co
 ## Heroku Deployment
 
 ![production deployment](assets/images/flask-gunicorn.png)
-<h6><i><strong>Source</strong>: <a href="https://eserdk.medium.com/heroku-nginx-gunicorn-flask-f10e81aca90d">Medium: Configuring heroku-based nginx and gunicorn to serve static content and to pass requests directly to the app</a></i></h6>
+<h6><i><strong>Source</strong>: <a href="https://eserdk.medium.com/heroku-nginx-gunicorn-flask-f10e81aca90d" target="_blank">Medium: Configuring heroku-based nginx and gunicorn to serve static content and to pass requests directly to the app</a></i></h6>
 
 </br>
 
