@@ -6,7 +6,6 @@ This is a Tableau automation server leveraging the [Webhooks API](https://www.ta
 <img src="assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg" alt="fishing hooks">
 </p>
 
-
 ###### IMAGE SOURCE: unsplash.com (Anne Nygard)
 
 </br>
@@ -22,6 +21,7 @@ The Webhooks API supports events related to resources such as workbooks, datasou
   - [Requirements](#requirements)
   - [Installation](#installation)
   - [Dependencies](#dependencies)
+          - [NOTE: Superfund sites are bad. Do yourself a favor and just get `conda`.](#note-superfund-sites-are-bad-do-yourself-a-favor-and-just-get-conda)
   - [Environment Variables](#environment-variables)
   - [Local Usage](#local-usage)
   - [Postman Collection](#postman-collection)
@@ -53,7 +53,7 @@ git clone git@github.com:stephenlprice/tableau-webhooks.git
 # or
 git clone https://github.com/stephenlprice/tableau-webhooks.git
 
-# navigate inside the project directory
+# navigate to the project directory
 cd tableau-webhooks
 ```
 1. Create a `conda` environment to install all dependencies and activate it (*see [Dependencies](#dependencies) for more info*). To install `conda` on a new machine, refer to the [Anaconda website](https://www.anaconda.com/).
@@ -64,7 +64,8 @@ conda env create -f environment.yml
 # activates the environment
 conda activate tableau-webhooks
 
-# lists existing conda environments, adds an asterisk next to the active environment
+# lists existing conda environments
+# adds an asterisk next to the active environment
 conda env list
 ```
 > ##### *__NOTE__: if you are not using `conda` you can create a `requirements.txt` file or install the dependencies listed in the `environment.yml` file manually with `pip3`.*
@@ -80,7 +81,8 @@ touch .env
 
 4. Run the app locally with gunicorn
 ```bash
-# $(MODULE_NAME) is index and $(VARIABLE_NAME) is app (index.py is where the Flask server is initialized)
+# $(MODULE_NAME) is index and $(VARIABLE_NAME) is app 
+# (index.py is where the Flask server is initialized)
 gunicorn index:app
 ```
 
@@ -88,7 +90,17 @@ gunicorn index:app
 
 ## Dependencies
 
-This project was built with [Anaconda](https://www.anaconda.com/), therefore the development environment can be cloned from the `environment.yml` file. Most dependencies are installed with `conda` while the last three are installed with `pip3`. 
+This project was built with [Anaconda](https://www.anaconda.com/) to manage Python environments, therefore the development environment can be cloned from the `environment.yml` file. Most dependencies are installed with `conda` while the last two are installed with `pip3`.
+
+Managing Python environments is a best practice and well described by the following [xkcd 1987](https://xkcd.com/1987/):
+
+<p align="center">
+<img src="assets/images/xkcd-1987.png" alt="fishing hooks">
+</p>
+
+###### NOTE: Superfund sites are bad. Do yourself a favor and just get `conda`.
+
+</br>
 
 If you are new to `conda` I recommend keeping the [conda cheatsheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf) nearby for reference.
 
@@ -97,14 +109,14 @@ name: tableau-webhooks
 channels:
   - defaults
 dependencies:
-  - python=3.8.8
+  - python=3.9.12
   - flask=2.0.2
   - gunicorn=20.1.0
+  - requests=2.28.1
   - pip=21.2.4
   - pip:
     - python-dotenv==0.19.2
-    - twilio==7.3.0
-    - tableauserverclient==0.17.0
+    - pyjwt[crypto]==2.4.0
 ```
 
 It is possible to recreate this environment without Anaconda, using something like [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/). In that case you can install all dependencies with `pip3` and write a `requirements.txt` file to document your dependencies.
@@ -113,9 +125,7 @@ It is possible to recreate this environment without Anaconda, using something li
 
 ## Environment Variables
 
-To protect private data such as phone numbers and passwords, this project relies on `environment variables` to store this information without pushing them to the public Github repository (via `.gitignore`). If you are new to this concept I highly recommend that you read [Twilio's blog post](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) on the subject.
-
-**tldr**: create a `.env` file using the example-env file provided with the repo. `python-dotenv` will load these variables into `notifier.py` to be used in the app.
+To protect private data such as PATs, this project relies on `environment variables`, that way this information is available in development and production environments without pushing them to the public Github repository (via `.gitignore`). If you are new to this concept I highly recommend that you read [Twilio's blog post](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) on the subject. The `python-dotenv` package will load these variables into the server when initialized.
 
 Your `.env` file must contain all of the following variables:
 
@@ -152,19 +162,29 @@ To start the server with `gunicorn` you can run this command:
 gunicorn notifier:app
 ```
 
-As a result `gunicorn` will log activity made to the app's endpoints and will be available at: 
+As a result the server will be available at: 
 
 ```bash
 # API index
 http://127.0.0.1:8000
-# the endpoint used for notifications
-http://127.0.0.1:8000/notifier
+# the endpoint used for incoming webhooks
+http://127.0.0.1:8000/webhook
 ```
 
-You can trigger Twilio notifications by making a POST request to the `/notifier` endpoint such as:
+For development purposes it is also acceptable to start the server this way
 
 ```bash
-curl "http://127.0.0.1:8000/notifier" -X POST
+# this should allow for live updates as you code
+python index.py
+```
+
+You can simulate webhook behavior by sending requests with sample payloads described in the [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) documentation:
+
+```bash
+curl "http://127.0.0.1:8000/webhook" \ 
+-X POST \
+-H "Content-Type: application/json" \
+-d @filename
 ```
 
 </br>
