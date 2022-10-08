@@ -125,7 +125,7 @@ It is possible to recreate this environment without Anaconda, using something li
 
 ## Environment Variables
 
-To protect private data such as PATs, this project relies on `environment variables`, that way this information is available in development and production environments without pushing them to the public Github repository (via `.gitignore`). If you are new to this concept I highly recommend that you read [Twilio's blog post](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) on the subject. The `python-dotenv` package will load these variables into the server when initialized.
+To protect private data such as PATs this project relies on `environment variables`, that way this information is available in development and production environments without pushing them to Git repositories (via `.gitignore`). If you are new to this concept I highly recommend that you read [Twilio's blog post](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) on the subject. The `python-dotenv` package will load these variables into the server when initialized.
 
 ```bash
 # create a .env file
@@ -154,6 +154,8 @@ WHATSAPP_TO='whatsapp:+1 your whatsapp number'
 FLASK_ENV='default is production, set to development for debugging'
 ```
 
+If you only use one REST API authentication mechanism (*PAT for example*), you can provide empty strings for other values such as `TABLEAU_CA_CLIENT`, `TABLEAU_CA_SECRET_ID`, `TABLEAU_CA_SECRET_VALUE` that are used by `JWT` authentication.
+
 </br>
 
 ## Local Usage
@@ -163,20 +165,20 @@ The app was built in [Python](https://www.python.org/) using the [Flask](https:/
 To start the server with `gunicorn` you can run this command:
 
 ```bash
-# $(MODULE_NAME) is notifier and $(VARIABLE_NAME) is app (see notifier.py)
-gunicorn notifier:app
+# $(MODULE_NAME) is index and $(VARIABLE_NAME) is app 
+# (index.py is where the Flask server is initialized)
+gunicorn index:app
 ```
 
 As a result the server will be available at: 
 
 ```bash
-# API index
 http://127.0.0.1:8000
 # the endpoint used for incoming webhooks
 http://127.0.0.1:8000/webhook
 ```
 
-For development purposes it is also acceptable to start the server this way
+For development purposes it is also acceptable to start the server this way:
 
 ```bash
 # this should allow for live updates as you code
@@ -265,7 +267,7 @@ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-python.git
 
 3. The existing `Procfile` runs the command to launch a "web" dyno on Heroku
 ```bash
-web: gunicorn notifier:app
+web: gunicorn index:app
 ```
 
 4. Projects using `conda` environments can use the provided `environment.yml` file, otherwise you will have to create a `requirements.txt` file to install [python dependencies on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#declare-app-dependencies)
