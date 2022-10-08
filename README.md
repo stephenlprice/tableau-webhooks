@@ -147,8 +147,9 @@ TABLEAU_PAT_NAME='personal access token name'
 TABLEAU_PAT_SECRET='personal access token secret'
 FLASK_ENV='default is production, set to development for debugging'
 ```
+If you add integrations to other services such as Slack or Twilio, this would be the right place to store credentials needed to authenticate to 3rd parties.
 
-If you only use one REST API authentication mechanism (*PAT for example*), you can provide empty strings for other values such as `TABLEAU_CA_CLIENT`, `TABLEAU_CA_SECRET_ID`, `TABLEAU_CA_SECRET_VALUE` that are used by `JWT` authentication.
+If you only use one REST API authentication mechanism (*`PAT` for example*), you can provide empty strings for other values such as `TABLEAU_CA_CLIENT`, `TABLEAU_CA_SECRET_ID`, `TABLEAU_CA_SECRET_VALUE` that are used by `JWT` authentication.
 
 </br>
 
