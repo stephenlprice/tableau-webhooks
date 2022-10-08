@@ -102,6 +102,8 @@ Managing Python environments is a best practice and well described by the follow
 
 If you are new to `conda` I recommend keeping the [conda cheatsheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf) nearby for reference.
 
+These are the contents of the `environment.yml` file:
+
 ```yaml
 name: tableau-webhooks
 channels:
