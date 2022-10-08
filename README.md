@@ -25,7 +25,7 @@ The Webhooks API supports events related to resources such as workbooks, datasou
   - [Postman Collection](#postman-collection)
     - [Environment file](#environment-file)
     - [REST API Authentication](#rest-api-authentication)
-  - [Deployment](#deployment)
+  - [Heroku Deployment](#heroku-deployment)
     - [Steps](#steps)
 
 </br>
@@ -223,30 +223,30 @@ Refer to the documentation for [REST API authentication](https://help.tableau.co
 
 </br>
 
-## Deployment
+## Heroku Deployment
 
 ![production deployment](assets/images/flask-gunicorn.png)
 <h6><i><strong>Source</strong>: <a href="https://eserdk.medium.com/heroku-nginx-gunicorn-flask-f10e81aca90d">Medium: Configuring heroku-based nginx and gunicorn to serve static content and to pass requests directly to the app</a></i></h6>
 
 </br>
 
-The app is setup for deployment on [Heroku](https://heroku.com/) using a free dyno (database not required). Deployment to this platform has a few requirements:
+The app is setup for deployment on [Heroku](https://heroku.com/). Deployment to this platform has a few requirements:
 
-- Free [Heroku](https://heroku.com/) account
-- Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
-- An `environment.yml` or `requirements.txt` file
-- A `Procfile`
-- Heroku buildpacks for [conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python)
+- [ ] [Heroku](https://heroku.com/) account
+- [ ] Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+- [ ] An `environment.yml` or `requirements.txt` file
+- [ ] A `Procfile` (instructions for starting your dyno)
+- [ ] Heroku buildpacks for [conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python) (will install project dependencies)
 
 ### Steps
 
 1. Add a [Heroku remote](https://devcenter.heroku.com/articles/git#creating-a-heroku-remote) (track this git repo on a Heroku app)
 ```bash
 # creates a new app (declare a name or it will be randomly named)
-heroku create your-app-name
+heroku create {your-app-name}
 
 # add an existing Heroku remote to the git repo
-heroku git:remote -a your-app-name
+heroku git:remote -a {your-app-name}
 
 # confirm that a Heroku remote is tracking the repo
 git remote -v
@@ -261,7 +261,7 @@ heroku buildpacks:set https://github.com/pl31/heroku-buildpack-conda.git
 heroku buildpacks:set https://github.com/heroku/heroku-buildpack-python.git
 ```
 
-3. The existing `Procfile` runs the command launch a "web" dyno on Heroku
+3. The existing `Procfile` runs the command to launch a "web" dyno on Heroku
 ```bash
 web: gunicorn notifier:app
 ```
@@ -269,11 +269,16 @@ web: gunicorn notifier:app
 4. Projects using `conda` environments can use the provided `environment.yml` file, otherwise you will have to create a `requirements.txt` file to install [python dependencies on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#declare-app-dependencies)
 
 5. Add all of the [environment variables](#environment-variables) listed in the `example-env` file to the Heroku app's settings under "config vars" (this is done on the website)
+
+</br>
+
    
-> ##### *__NOTE__: the server will have a `RuntimeError` if these environment variables are not accessible.*
+> ##### *__WARNING__: the server will have a `RuntimeError` if these environment variables are not accessible.*
+> 
 </br>
 
 6. Deploy [code to Heroku](https://devcenter.heroku.com/articles/git#deploying-code) 
 ```bash
-git push heroku main
+# pushes your git branch to the Heroku remote
+git push heroku {branch-name}
 ```
