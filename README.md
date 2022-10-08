@@ -6,7 +6,7 @@ This is a Tableau automation server leveraging the [Webhooks API](https://www.ta
 <img src="assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg" alt="fishing hooks">
 </p>
 
-<h6><i><strong>Image Source</strong>: <a href="https://unsplash.com/photos/viq9Ztqi3Vc" target="_blank">unsplash.com (Anne Nygard)</a></i></h6>
+<h6><i><strong>Image Source</strong>: <a href="https://unsplash.com/photos/viq9Ztqi3Vc" target="_blank">unsplash.com (Anne Nygård)</a></i></h6>
 
 </br>
 
