@@ -8,9 +8,7 @@ This is a Tableau automation server leveraging the [Webhooks API](https://www.ta
 
 </br>
 
-The Webhooks API supports events related to resources such as workbooks, datasources and administrator users.
-
-This automation server will receive `POST` requests from your Tableau environment when events take place, allowing you to implement functionality such as being notified via Slack, Twilio or other messaging services as well as automating resource management. To provide automation features, this server is setup to make requests to Tableau's [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm).
+The Webhooks API supports events related to resources such as workbooks, datasources and administrator users. This automation server will receive `POST` requests from your Tableau environment when events take place, allowing you to implement functionality such as being notified via Slack, Twilio or other messaging services as well as automating resource management. To provide automation features, this server is setup to make requests to Tableau's [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm).
 
 </br>
 
