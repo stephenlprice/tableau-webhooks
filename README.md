@@ -39,7 +39,7 @@ This list covers requirements for local development and deployment to Heroku (no
 - [ ] [Python](https://www.python.org/) (*the version is declared in the `environment.yml` file*)
 - [ ] [Anaconda](https://www.anaconda.com/) or some other Python environment manager (*optional but recommended*)
 - [ ] Tableau Server or a Tableau Cloud site (a developer site is available for free by signing up for the [developer program](https://www.tableau.com/developer))
-- [ ] Authentication to Tableau's REST API is performed via `PAT` (*personal access token*), see the documentation for [REST API authentication](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_authentication.htm#sign_in)
+- [ ] Authentication to Tableau's REST API is performed either via `PAT` (*personal access token*) by default as well as username and password or `JWT` (*Connected Apps*). Refer to the documentation for [REST API authentication](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_authentication.htm#sign_in) for more information. **NOTE**: currently `JWT` authentication does not support all RESTful methods listed in the documentation.
 - [ ] [Postman](https://www.postman.com/) to make test requests to the [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) or to test the automation server during local development (*optional*)
 - [ ] [Request Bin](https://requestbin.com/) a useful and free service you can use to receive real webhooks requests for development (*optional*)
 
@@ -219,9 +219,9 @@ Postman will also help you test the behavior you have written for each event typ
 
 ### Authentication
 
-To make requests to Tableau's RESTful endpoints you will need to authenticate by way of a username & password or via PAT (personal access token) to obtain an `API key` that allows users to make requests to other endpoints. 
+To send requests to Tableau's RESTful endpoints you will need to authenticate by way of a via `PAT` (*personal access token*), username & password or `JWT` (*Connected App*). Successful authentication will return an `API key` that is added to the `X-Tableau-Auth` header, allowing users to send requests to protected endpoints. 
 
-The collection has a `prerequest script` that will automatically run an authentication request every time you make any other request and therefore saves you from having to do this manually. This functionality requires that you provide username, password and PAT values in the provided environment file.
+Refer to the documentation for [REST API authentication](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_authentication.htm#sign_in) for more information. By default, the automation server will use a `PAT`.  **NOTE**: currently `JWT` authentication does not support all RESTful methods listed in the documentation.
 
 </br>
 
