@@ -6,7 +6,7 @@ This is a Tableau automation server leveraging the [Webhooks API](https://www.ta
 <img src="assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg" alt="fishing hooks">
 </p>
 
-###### IMAGE SOURCE: unsplash.com (Anne Nygard)
+<h6><i><strong>Image Source</strong>: <a href="https://unsplash.com/photos/viq9Ztqi3Vc">unsplash.com (Anne Nygard)</a></i></h6>
 
 </br>
 
@@ -16,17 +16,15 @@ The Webhooks API supports events related to resources such as workbooks, datasou
 
 ## Table of Contents
 - [Tableau Webhooks](#tableau-webhooks)
-          - [IMAGE SOURCE: unsplash.com (Anne Nygard)](#image-source-unsplashcom-anne-nygard)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Installation](#installation)
   - [Dependencies](#dependencies)
-          - [NOTE: Superfund sites are bad. Do yourself a favor and just get `conda`.](#note-superfund-sites-are-bad-do-yourself-a-favor-and-just-get-conda)
   - [Environment Variables](#environment-variables)
   - [Local Usage](#local-usage)
   - [Postman Collection](#postman-collection)
     - [Environment file](#environment-file)
-    - [Authentication](#authentication)
+    - [REST API Authentication](#rest-api-authentication)
   - [Deployment](#deployment)
     - [Steps](#steps)
 
@@ -98,7 +96,7 @@ Managing Python environments is a best practice and well described by the follow
 <img src="assets/images/xkcd-1987.png" alt="xkcd 1987 comic">
 </p>
 
-###### NOTE: Superfund sites are bad. Do yourself a favor and just get `conda`.
+<h6><i><strong>NOTE</strong>: Superfund sites are bad. Do yourself a favor and just get <code>conda</code>.</i></h6>
 
 </br>
 
@@ -217,7 +215,7 @@ Postman will also help you test the behavior you have written for each event typ
 
 </br>
 
-### Authentication
+### REST API Authentication
 
 To send requests to Tableau's RESTful endpoints you will need to authenticate by way of a via `PAT` (*personal access token*), username & password or `JWT` (*Connected App*). Successful authentication will return an `API key` that is added to the `X-Tableau-Auth` header, allowing users to send requests to protected endpoints. 
 
