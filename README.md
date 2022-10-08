@@ -56,18 +56,21 @@ git clone https://github.com/stephenlprice/tableau-webhooks.git
 # navigate inside the project directory
 cd tableau-webhooks
 ```
-1. Create a `conda` environment to install all dependencies and activate it (see [Dependencies](#dependencies) for more info.)
+1. Create a `conda` environment to install all dependencies and activate it (*see [Dependencies](#dependencies) for more info*). To install `conda` on a new machine, refer to the [Anaconda website](https://www.anaconda.com/).
 ```bash
 # will create an environment called tableau-webhooks
 conda env create -f environment.yml
 
 # activates the environment
 conda activate tableau-webhooks
+
+# lists existing conda environments, adds an asterisk next to the active environment
+conda env list
 ```
 > ##### *__NOTE__: if you are not using `conda` you can create a `requirements.txt` file or install the dependencies listed in the `environment.yml` file manually with `pip3`.*
 </br>
 
-3. Create a `.env` file in the project's root directory and add values for each environment variable described in the [example file](#environment-variables) (`example-env`)
+3. Create a `.env` file in the project's root directory and add values for each environment variable described in the [Environment Variables](#environment-variables) section.
 ```bash
 # create the .env file
 touch .env
@@ -77,8 +80,8 @@ touch .env
 
 4. Run the app locally with gunicorn
 ```bash
-# $(MODULE_NAME) is notifier and $(VARIABLE_NAME) is app (see notifier.py)
-gunicorn notifier:app
+# $(MODULE_NAME) is index and $(VARIABLE_NAME) is app (index.py is where the Flask server is initialized)
+gunicorn index:app
 ```
 
 </br>
