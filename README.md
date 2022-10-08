@@ -1,15 +1,22 @@
 # Tableau Webhooks
 
-A project demonstrating the use of Tableau's [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) to orchestrate processes dependent on Tableau events and incorporates [Twilio](https://www.twilio.com/) to send notifications to a site or server administrator upon failed data refreshes.
+This is a Tableau automation server leveraging the [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) to orchestrate processes dependent on events taking place in Tableau Cloud or Tableau Server.
 
-The app is capable of making REST API calls to Tableau after an event takes place as well as sending SMS, WhatsApp and perform phone calls when a data source or workbook fails to refresh.
+![fishing hooks](assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg)
+###### IMAGE SOURCE: unsplash.com (Anne Nygard)
 
-![tableau + twilio](assets/images/tableau+twilio.png)
+</br>
+
+
+The Webhooks API supports events related to resources such as workbooks, datasources and administrator users.
+
+This automation server will receive `POST` requests from your Tableau environment when events take place, allowing you to implement functionality such as being notified via Slack, Twilio or other messaging services as well as automating resource management. To provide automation features, this server is setup to make requests to Tableau's [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm).
 
 </br>
 
 ## Table of Contents
 - [Tableau Webhooks](#tableau-webhooks)
+          - [IMAGE SOURCE: unsplash.com (Anne Nygard)](#image-source-unsplashcom-anne-nygard)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Installation](#installation)
@@ -28,13 +35,12 @@ The app is capable of making REST API calls to Tableau after an event takes plac
 
 This list covers requirements for local development and deployment to Heroku (note that you are free to deploy this server on other platforms).
 
-- [Python](https://www.python.org/) version 3.8.8
-- [Anaconda](https://www.anaconda.com/) or some other Python environment manager (optional but recommended)
-- Tableau Server or Tableau Online site (a developer site is available for free by signing up for the [developer program](https://www.tableau.com/developer))
-- Authentication for Tableau is done via PAT (personal access token) see the documentation for the [Webhooks API](https://help.tableau.com/current/developer/webhooks/en-us/)
-- [Twilio](https://www.twilio.com/) account providing a phone number, this is only needed if you want to receive notifications (a trial account is enough)
-- [Twilio WhatsApp Sandbox](https://www.google.com/url?q=https://www.twilio.com/console/messaging/whatsapp/sandbox) (obtained on the Twilio console)
-- [Postman](https://www.postman.com/) to make requests to the [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) (optional)
+- [ ] [Python](https://www.python.org/) (*the version is declared in the `environment.yml` file*)
+- [ ] [Anaconda](https://www.anaconda.com/) or some other Python environment manager (*optional but recommended*)
+- [ ] Tableau Server or a Tableau Cloud site (a developer site is available for free by signing up for the [developer program](https://www.tableau.com/developer))
+- [ ] Authentication to Tableau's REST API is performed via `PAT` (*personal access token*), see the documentation for [REST API authentication](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_authentication.htm#sign_in)
+- [ ] [Postman](https://www.postman.com/) to make test requests to the [Tableau Webhooks API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_webhooks.htm) or to test the automation server during local development (*optional*)
+- [ ] [Request Bin](https://requestbin.com/) a useful and free service you can use to receive real webhooks requests for development (*optional*)
 
 </br>
 
