@@ -2,11 +2,11 @@
 
 This is a Tableau automation server leveraging the [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) to orchestrate processes dependent on events taking place in Tableau Cloud or Tableau Server.
 
-![fishing hooks](assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg)
+<img src="assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg" alt="fishing hooks" style="display: block;margin-left: auto;margin-right: auto;">
+
 ###### IMAGE SOURCE: unsplash.com (Anne Nygard)
 
 </br>
-
 
 The Webhooks API supports events related to resources such as workbooks, datasources and administrator users.
 
