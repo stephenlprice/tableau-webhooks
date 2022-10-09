@@ -63,7 +63,7 @@ Webhooks workflows start by identifying a need that can be fulfilled by automati
   <img 
     src="assets/images/tableau-webhooks-development.png" 
     alt="tableau webhooks development flowchart"
-    style="max-width: 80%;"
+    style="max-width: 50%;"
   >
 </p>
 
@@ -72,26 +72,6 @@ Once the need is identified, developers can start by configuring a webhook on Ta
 Tableau Webhooks have a [test endpoint](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-get-started.html) that can be used to trigger sample payloads which is very useful for developing these integrations.
 
 You can also run [Tableau Webhooks locally](#local-usage) in development mode. Developers can then use `curl` or [Postman](#postman-collection) to send realistic payloads to the local server to prototype event handling and running real workflows without having to push code to production.
-
-</br>
-
-## Workflows
-
-You can think of processes that integrate webhooks with custom automation as a workflow. A workflow starts with an event ocurring in a Tableau Server or Tableau Cloud site. If a webhook as been deployed to respond to this type of event, Tableau will then send an `HTTP POST` request to Tableau Webhooks at the `/webhook` URL. The webhook request will contain a payload with data that can be used to process the event and determine if Tableau Webhooks should run an automation process. 
-
-The following flowchart illustrates what this process looks like.
-
-<p align="center">
-  <img 
-    src="assets/images/webhooks-workflow.png" 
-    alt="basic workflow flowchart"
-    style="max-width: 80%;"
-  >
-</p>
-
-Webhook payloads are limited to what is described in [the documentation](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html). As a result, to run complex workflows Tableau Webhooks will often need to send requests to Tableau's REST API. For example, if you want to monitor a specific data source for extract refresh failures rather than get notified for every data source hosted on your Tableau site, you can use the `resource-id` provided by the webhook payload and request more information about that data source from the REST API. That way you may check to see if said data source has a property such as a `tag` that can be used to determine if a notification should be sent to data stewards via Slack.
-
-If the event meets the criteria you have established in `webhooks.py` then you can run the intended automation. However, if the event does not meet said criteria it can be safely ignored.
 
 ```bash
 .
@@ -110,6 +90,26 @@ If the event meets the criteria you have established in `webhooks.py` then you c
     ├── exceptions.py
     └── log.py
 ```
+
+</br>
+
+## Workflows
+
+You can think of processes that integrate webhooks with custom automation as a workflow. A workflow starts with an event ocurring in a Tableau Server or Tableau Cloud site. If a webhook as been deployed to respond to this type of event, Tableau will then send an `HTTP POST` request to Tableau Webhooks at the `/webhook` URL. The webhook request will contain a payload with data that can be used to process the event and determine if Tableau Webhooks should run an automation process. 
+
+The following flowchart illustrates what this process looks like.
+
+<p align="center">
+  <img 
+    src="assets/images/webhooks-workflow.png" 
+    alt="basic workflow flowchart"
+    style="max-width: 50%;"
+  >
+</p>
+
+Webhook payloads are limited to what is described in [the documentation](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html). As a result, to run complex workflows Tableau Webhooks will often need to send requests to Tableau's REST API. For example, if you want to monitor a specific data source for extract refresh failures rather than get notified for every data source hosted on your Tableau site, you can use the `resource-id` provided by the webhook payload and request more information about that data source from the REST API. That way you may check to see if said data source has a property such as a `tag` that can be used to determine if a notification should be sent to data stewards via Slack.
+
+If the event meets the criteria you have established in `webhooks.py` then you can run the intended automation. However, if the event does not meet said criteria it can be safely ignored.
 
 </br>
 
@@ -181,7 +181,7 @@ Managing Python environments is a best practice and well illustrated by the foll
   <img 
     src="assets/images/xkcd-1987.png" 
     alt="xkcd 1987 comic"
-    style="max-width: 60%;"
+    style="width: 50%;"
   >
 </p>
 
