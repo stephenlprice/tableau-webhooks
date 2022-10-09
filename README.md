@@ -12,11 +12,19 @@ This is a Tableau automation server leveraging the [Webhooks API](https://www.ta
 
 The Webhooks API supports events related to resources such as workbooks, datasources and administrator users. This automation server will receive `POST` requests from your Tableau environment when events take place, allowing you to implement functionality such as being notified via Slack, Twilio or other messaging services as well as automating resource management. To provide automation features, this server is setup to make requests to Tableau's [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm).
 
+The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documentation lists a few sample use cases:
+
+>- When an extract refresh fails, file a ticket in ServiceNow automatically.
+>- When a workbook is updated, notify your team via their Slack channel.
+>- When a data source is published, email a data steward asking them to review and certify it.
+>- When a workbook refresh completes successfully, generate a PDF and post it to SharePoint.
+
 </br>
 
 ## Table of Contents
 - [Tableau Webhooks](#tableau-webhooks)
   - [Table of Contents](#table-of-contents)
+  - [Concepts](#concepts)
   - [Requirements](#requirements)
   - [Installation](#installation)
   - [Dependencies](#dependencies)
@@ -27,6 +35,12 @@ The Webhooks API supports events related to resources such as workbooks, datasou
     - [REST API Authentication](#rest-api-authentication)
   - [Heroku Deployment](#heroku-deployment)
     - [Steps](#steps)
+
+</br>
+
+## Concepts
+
+
 
 </br>
 
