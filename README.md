@@ -50,9 +50,11 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
 
 The following diagrams describe the fundamental development process of a Tableau Webhooks workflow as well as a high level workflow in action to help you get started with webhook automation.
 
+</br>
+
 ## Development
 
-
+Webhooks workflows start by identifying a need that can be fulfulled by automation. This requires finding a webhook event that matches the process you want to monitor and then making sure that the webhook payload contains the data needed to initiate the desired workflow.
 
 <p align="center">
   <img 
@@ -61,6 +63,12 @@ The following diagrams describe the fundamental development process of a Tableau
     style="max-width: 80%;"
   >
 </p>
+
+Once the need is identified, developers can start by configuring a webhook on Tableau using REST API [CRUD methods](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_notifications.htm) for webhooks. At the same time developers can prototype automation logic in Tableau Webhooks in the `webhooks.py` module. By default all supported event types have empty placeholders in this file, allowing you to provide your own way to handle Tableau events.
+
+Tableau Webhooks have a [test endpoint](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-get-started.html) that can be used to trigger sample payloads which is very useful for developing these integrations.
+
+You can also run [Tableau Webhooks locally](#local-usage) in development mode. Developers can then use `curl` or [Postman](#postman-collection) to send realistic payloads to the local server to prototype event handling and running real workflows without having to push code to production.
 
 </br>
 
@@ -247,6 +255,8 @@ This repository contains a [Postman](https://www.postman.com/) collection and en
 
 Once you have added a webhook to a Tableau site, you can test it using the `test` request provided in the collection. It is also useful to get a `list` of webhooks registered on the server to get the ID of a webhook that you wish to test.
 
+</br>
+
 ### Environment file
 
 The Postman collection was built to leverage the provided environment file which will store useful information such as credentials and URLs as well as allowing scripts to update variables for you automatically.
@@ -292,6 +302,8 @@ The app is setup for deployment on [Heroku](https://heroku.com/). Deployment to 
 - [ ] A `Procfile` (instructions for starting your dyno)
 - [ ] Heroku buildpacks for [conda](https://elements.heroku.com/buildpacks/pl31/heroku-buildpack-conda) or [python](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python) (will install project dependencies)
 
+</br>
+
 ### Steps
 
 1. Add a [Heroku remote](https://devcenter.heroku.com/articles/git#creating-a-heroku-remote) (track this git repo on a Heroku app)
@@ -323,9 +335,6 @@ web: gunicorn index:app
 4. Projects using `conda` environments can use the provided `environment.yml` file, otherwise you will have to create a `requirements.txt` file to install [python dependencies on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#declare-app-dependencies)
 
 5. Add all of the [environment variables](#environment-variables) listed in the `example-env` file to the Heroku app's settings under "config vars" (this is done on the website)
-
-</br>
-
    
 > ##### *__WARNING__: the server will have a `RuntimeError` if these environment variables are not accessible.*
 > 
