@@ -32,6 +32,7 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
   - [Table of Contents](#table-of-contents)
 - [Concepts](#concepts)
   - [Development](#development)
+  - [Workflows](#workflows)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Installation](#installation)
@@ -48,13 +49,15 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
 
 # Concepts
 
-The following diagrams describe the fundamental development process of a Tableau Webhooks workflow as well as a high level workflow in action to help you get started with webhook automation.
+The following sections describe the basic development process of a Tableau Webhooks workflow and provides a high level diagram of a workflow in action to help you get started with webhook automation.
+
+Tableau Webhooks is built to handle all event types such that you can deploy a single automation server to meet all webhook based Tableau automation needs.
 
 </br>
 
 ## Development
 
-Webhooks workflows start by identifying a need that can be fulfulled by automation. This requires finding a webhook event that matches the process you want to monitor and then making sure that the webhook payload contains the data needed to initiate the desired workflow.
+Webhooks workflows start by identifying a need that can be fulfilled by automation. This requires finding a webhook event that matches the process you want to monitor and then making sure that the webhook payload contains the data needed to initiate the desired workflow.
 
 <p align="center">
   <img 
@@ -69,6 +72,44 @@ Once the need is identified, developers can start by configuring a webhook on Ta
 Tableau Webhooks have a [test endpoint](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-get-started.html) that can be used to trigger sample payloads which is very useful for developing these integrations.
 
 You can also run [Tableau Webhooks locally](#local-usage) in development mode. Developers can then use `curl` or [Postman](#postman-collection) to send realistic payloads to the local server to prototype event handling and running real workflows without having to push code to production.
+
+</br>
+
+## Workflows
+
+You can think of processes that integrate webhooks with custom automation as a workflow. A workflow starts with an event ocurring in a Tableau Server or Tableau Cloud site. If a webhook as been deployed to respond to this type of event, Tableau will then send an `HTTP POST` request to Tableau Webhooks at the `/webhook` URL. The webhook request will contain a payload with data that can be used to process the event and determine if Tableau Webhooks should run an automation process. 
+
+The following flowchart illustrates what this process looks like.
+
+<p align="center">
+  <img 
+    src="assets/images/webhooks-workflow.png" 
+    alt="basic workflow flowchart"
+    style="max-width: 80%;"
+  >
+</p>
+
+Webhook payloads are limited to what is described in [the documentation](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html). As a result, to run complex workflows Tableau Webhooks will often need to send requests to Tableau's REST API. For example, if you want to monitor a specific data source for extract refresh failures rather than get notified for every data source hosted on your Tableau site, you can use the `resource-id` provided by the webhook payload and request more information about that data source from the REST API. That way you may check to see if said data source has a property such as a `tag` that can be used to determine if a notification should be sent to data stewards via Slack.
+
+If the event meets the criteria you have established in `webhooks.py` then you can run the intended automation. However, if the event does not meet said criteria it can be safely ignored.
+
+```bash
+.
+├── index.py
+├── libs
+│   ├── connected_apps.py
+│   ├── session.py
+│   └── tableau_rest.py
+├── logs
+│   └── webhooks.log
+├── modules
+│   ├── broadcast.py
+│   └── webhooks.py
+└── utils
+    ├── environment.py
+    ├── exceptions.py
+    └── log.py
+```
 
 </br>
 
@@ -134,13 +175,13 @@ gunicorn index:app
 
 This project was built with [Anaconda](https://www.anaconda.com/) to manage Python environments, therefore the development environment can be cloned from the `environment.yml` file. Most dependencies are installed with `conda` while the last two are installed with `pip3`.
 
-Managing Python environments is a best practice and well described by the following [xkcd 1987](https://xkcd.com/1987/):
+Managing Python environments is a best practice and well illustrated by the following [xkcd 1987](https://xkcd.com/1987/):
 
 <p align="center">
   <img 
     src="assets/images/xkcd-1987.png" 
     alt="xkcd 1987 comic"
-    style="max-width: 80%;"
+    style="max-width: 60%;"
   >
 </p>
 
