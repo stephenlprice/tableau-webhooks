@@ -3,10 +3,16 @@
 This is a Tableau automation server leveraging the [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) to orchestrate processes dependent on events taking place in Tableau Cloud or Tableau Server.
 
 <p align="center">
-<img src="assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg" alt="fishing hooks">
+  <img 
+    src="assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg" 
+    alt="fishing hooks"
+    style="max-width: 80%;"
+  >
 </p>
 
-<h6><i><strong>Image Source</strong>: <a href="https://unsplash.com/photos/viq9Ztqi3Vc" target="_blank">unsplash.com (Anne Nygård)</a></i></h6>
+<h6>
+  <i><strong>Image Source</strong>: <a href="https://unsplash.com/photos/viq9Ztqi3Vc" target="_blank">unsplash.com (Anne Nygård)</a></i>
+</h6>
 
 </br>
 
@@ -24,7 +30,9 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
 ## Table of Contents
 - [Tableau Webhooks](#tableau-webhooks)
   - [Table of Contents](#table-of-contents)
-  - [Concepts](#concepts)
+- [Concepts](#concepts)
+  - [Development](#development)
+- [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Installation](#installation)
   - [Dependencies](#dependencies)
@@ -38,11 +46,25 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
 
 </br>
 
-## Concepts
+# Concepts
+
+The following diagrams describe the fundamental development process of a Tableau Webhooks workflow as well as a high level workflow in action to help you get started with webhook automation.
+
+## Development
 
 
+
+<p align="center">
+  <img 
+    src="assets/images/tableau-webhooks-development.png" 
+    alt="tableau webhooks development flowchart"
+    style="max-width: 80%;"
+  >
+</p>
 
 </br>
+
+# Getting Started
 
 ## Requirements
 
@@ -107,10 +129,16 @@ This project was built with [Anaconda](https://www.anaconda.com/) to manage Pyth
 Managing Python environments is a best practice and well described by the following [xkcd 1987](https://xkcd.com/1987/):
 
 <p align="center">
-<img src="assets/images/xkcd-1987.png" alt="xkcd 1987 comic">
+  <img 
+    src="assets/images/xkcd-1987.png" 
+    alt="xkcd 1987 comic"
+    style="max-width: 80%;"
+  >
 </p>
 
-<h6><i><strong>NOTE</strong>: Superfund sites are bad. Do yourself a favor and just get <code>conda</code>.</i></h6>
+<h6>
+  <i><strong>NOTE</strong>: Superfund sites are bad. Do yourself a favor and get <code>conda</code>.</i>
+</h6>
 
 </br>
 
@@ -208,7 +236,11 @@ curl "http://127.0.0.1:8000/webhook" \
 ## Postman Collection
 
 <p align="center">
-<img src="assets/images/postman.png" alt="xkcd 1987 comic">
+  <img 
+    src="assets/images/postman.png" 
+    alt="postman logo"
+    style="max-width: 80%;"
+  >
 </p>
 
 This repository contains a [Postman](https://www.postman.com/) collection and environment file to help you interact with [REST API endpoints](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_notifications.htm#create_webhook) used to configure Tableau webhooks.
@@ -238,8 +270,17 @@ Refer to the documentation for [REST API authentication](https://help.tableau.co
 
 ## Heroku Deployment
 
-![production deployment](assets/images/flask-gunicorn.png)
-<h6><i><strong>Source</strong>: <a href="https://eserdk.medium.com/heroku-nginx-gunicorn-flask-f10e81aca90d" target="_blank">Medium: Configuring heroku-based nginx and gunicorn to serve static content and to pass requests directly to the app</a></i></h6>
+<p align="center">
+  <img 
+    src="assets/images/flask-gunicorn.png" 
+    alt="heroku, nginx, gunicorn & flask logos"
+    style="max-width: 80%;"
+  >
+</p>
+
+<h6>
+  <i><strong>Source</strong>: <a href="https://eserdk.medium.com/heroku-nginx-gunicorn-flask-f10e81aca90d" target="_blank">Medium: Configuring heroku-based nginx and gunicorn to serve static content and to pass requests directly to the app</a></i>
+</h6>
 
 </br>
 
