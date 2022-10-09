@@ -1,4 +1,12 @@
-# Tableau Webhooks
+<h1
+  style="text-align: center;
+  padding: 10px;
+  background: rgba(0,0,0,.7);
+  color: #0df2c1;
+  font-size: 60px;"
+>
+  Tableau Webhooks
+</h1>
 
 This is a Tableau automation server leveraging the [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) to orchestrate processes dependent on events taking place in Tableau Cloud or Tableau Server.
 
@@ -28,8 +36,6 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
 </br>
 
 ## Table of Contents
-- [Tableau Webhooks](#tableau-webhooks)
-  - [Table of Contents](#table-of-contents)
 - [Concepts](#concepts)
   - [Development](#development)
   - [Workflows](#workflows)
