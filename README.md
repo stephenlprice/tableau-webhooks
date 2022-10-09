@@ -6,7 +6,7 @@ This is a Tableau automation server leveraging the [Webhooks API](https://www.ta
   <img 
     src="assets/images/anne-nygard-viq9Ztqi3Vc-unsplash.jpg" 
     alt="fishing hooks"
-    style="max-width: 80%;"
+    style="width: 80%;"
   >
 </p>
 
@@ -63,7 +63,7 @@ Webhooks workflows start by identifying a need that can be fulfilled by automati
   <img 
     src="assets/images/tableau-webhooks-development.png" 
     alt="tableau webhooks development flowchart"
-    style="max-width: 50%;"
+    style="width: 60%;"
   >
 </p>
 
@@ -103,7 +103,7 @@ The following flowchart illustrates what this process looks like.
   <img 
     src="assets/images/webhooks-workflow.png" 
     alt="basic workflow flowchart"
-    style="max-width: 50%;"
+    style="width: 60%;"
   >
 </p>
 
@@ -288,7 +288,7 @@ curl "http://127.0.0.1:8000/webhook" \
   <img 
     src="assets/images/postman.png" 
     alt="postman logo"
-    style="max-width: 80%;"
+    style="width: 80%;"
   >
 </p>
 
@@ -325,7 +325,7 @@ Refer to the documentation for [REST API authentication](https://help.tableau.co
   <img 
     src="assets/images/flask-gunicorn.png" 
     alt="heroku, nginx, gunicorn & flask logos"
-    style="max-width: 80%;"
+    style="width: 80%;"
   >
 </p>
 
