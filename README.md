@@ -120,7 +120,9 @@ Tableau Webhooks contains one more module called `broadcast.py` which allows for
 
 The `libs` folder contains reusable functionality such as sending requests to Tableau's REST API in `tableau_rest.py`, generation of JWTs in `connected_apps.py` as well as defining a Session class in `session.py` used to establish REST API sessions.
 
-The `utils` folder contains supporting functionality such as environment validation, exceptions and logging. The `logs` folder stores logging messages in `webhooks.log`. Production environments will log messages with a level of `INFO` and above while development environments will log everything starting from `DEBUG` and above. This behavior is controlled by the `FLASK_ENV` environment variable (*for more information see [Flask's documentation](https://flask.palletsprojects.com/en/2.2.x/config/)*)
+The `utils` folder contains supporting functionality such as environment validation, exceptions and logging. The `logs` folder stores logging messages in `webhooks.log`. Production environments will log messages with a level of `INFO` and above while development environments will log everything starting from `DEBUG` and above. This behavior is controlled by the `FLASK_ENV` environment variable. 
+
+(*For more information on `FLASK_ENV` see [Flask's documentation](https://flask.palletsprojects.com/en/2.2.x/config/). For more information on logging see the [documentation for the logging library](https://docs.python.org/3/library/logging.html)*)
 
 </br>
 
@@ -249,9 +251,13 @@ TABLEAU_PAT_NAME='personal access token name'
 TABLEAU_PAT_SECRET='personal access token secret'
 FLASK_ENV='default is production, set to development for debugging'
 ```
-If you add integrations to other services such as Slack or Twilio, this would be the right place to store credentials needed to authenticate to 3rd parties.
+If you add integrations to other services such as [Slack](https://slack.com/) or [Twilio](https://www.twilio.com/), this would be the right place to store credentials needed to authenticate to 3rd parties.
 
 If you only use one REST API authentication mechanism (*`PAT` for example*), you can provide empty strings for other values such as `TABLEAU_CA_CLIENT`, `TABLEAU_CA_SECRET_ID`, `TABLEAU_CA_SECRET_VALUE` that are used by `JWT` authentication.
+
+>**NOTE**: Production environments will log messages with a level of `INFO` and above while development environments will log everything starting from `DEBUG` and above. This behavior is controlled by the `FLASK_ENV` environment variable. 
+>
+>(*For more information on `FLASK_ENV` see [Flask's documentation](https://flask.palletsprojects.com/en/2.2.x/config/). For more information on logging see the [documentation for the logging library](https://docs.python.org/3/library/logging.html)*)
 
 </br>
 
@@ -290,6 +296,10 @@ curl "http://127.0.0.1:8000/webhook" \
 -H "Content-Type: application/json" \
 -d @filename
 ```
+
+>**NOTE**: Production environments will log messages with a level of `INFO` and above while development environments will log everything starting from `DEBUG` and above. This behavior is controlled by the `FLASK_ENV` environment variable. 
+>
+>(*For more information on `FLASK_ENV` see [Flask's documentation](https://flask.palletsprojects.com/en/2.2.x/config/). For more information on logging see the [documentation for the logging library](https://docs.python.org/3/library/logging.html)*)
 
 </br>
 
