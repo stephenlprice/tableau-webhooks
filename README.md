@@ -1,6 +1,6 @@
 # Tableau Webhooks
 
-This is a Tableau automation server leveraging the [Webhooks](https://www.tableau.com/developer/tools/webhook-api) to orchestrate workflows dependent on events taking place in Tableau Cloud or Tableau Server.
+This is a Tableau automation server leveraging [Webhooks](https://www.tableau.com/developer/tools/webhook-api) to orchestrate workflows dependent on events taking place in Tableau Cloud or Tableau Server.
 
 <p align="center">
   <img 
@@ -16,7 +16,7 @@ This is a Tableau automation server leveraging the [Webhooks](https://www.tablea
 
 </br>
 
-Tableau [Webhooks](https://www.tableau.com/developer/tools/webhook-api) supports events related to resources such as workbooks, datasources and administrator users. This automation server will receive `POST` requests from your Tableau environment when events take place, allowing you to implement functionality such as being notified via Slack, Twilio or other messaging services as well as automating resource management. To provide automation features, this server is setup to make requests to Tableau's [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm).
+Tableau [Webhooks](https://www.tableau.com/developer/tools/webhook-api) supports events related to resources such as workbooks, datasources and administrator users. This automation server will receive `POST` requests from your Tableau environment when events take place, allowing you to implement functionality such as being notified via [Slack](https://slack.com/), [Twilio](https://www.twilio.com/) or other messaging services as well as automating resource management. To provide automation features, this server is setup to make requests to Tableau's [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm).
 
 The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documentation lists a few sample use cases that exemplify the usage of an automation server:
 
@@ -52,7 +52,7 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
 
 The following sections describe the basic development process of a Tableau Webhooks workflow and provides a high level diagram of a workflow in action to help you get started with webhook automation.
 
-Tableau Webhooks is built to handle all event types such that you can deploy a single automation server to meet all webhook based Tableau automation needs.
+Tableau Webhooks is built to handle all event types [listed in the documentation](https://www.tableau.com/developer/tools/webhook-api) such that you can deploy a single automation server to meet all webhooks related automation needs.
 
 </br>
 
@@ -70,7 +70,7 @@ The following flowchart illustrates what this process looks like.
   >
 </p>
 
-Webhook payloads are limited to what is described in [the documentation](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html). As a result, to run complex workflows Tableau Webhooks will often need to send requests to Tableau's REST API. For example, if you want to monitor a specific data source for extract refresh failures rather than get notified for every data source hosted on your Tableau site, you can use the `resource-id` provided by the webhook payload and request more information about that data source from the REST API. That way you may check to see if said data source has a property such as a `tag` that can be used to determine if a notification should be sent to data stewards via Slack.
+Webhook payloads are limited to what is described in [the documentation](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-events-payload.html). As a result, to run complex workflows Tableau Webhooks will often need to send requests to [Tableau's REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm). For example, if you want to monitor a specific data source for extract refresh failures - rather than get notified for every data source hosted on your Tableau site, you can use the `resource-id` provided by the webhook payload and request more information about that data source from the REST API. That way you may check to see if said data source has a property such as a `tag` that can be used to determine if a notification should be sent to data stewards via Slack.
 
 If the event meets the criteria you have established in `webhooks.py` then you can run the intended automation. However, if the event does not meet said criteria it can be safely ignored.
 
