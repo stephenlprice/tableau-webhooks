@@ -121,7 +121,7 @@ The following tree diagram highlights the most important files for Tableau Webho
     └── log.py
 ```
 
-Tableau Webhooks contains one more module called `broadcast.py` which allows for automatic updates of content published to Tableau's Broadcast service whenever a workbook is refreshed on a Tableau Cloud site. This is the only out of the box workflow built-in to Tableau Webhooks. If you wish to add a new workflow to this server, define a new route in `index.py`, add an event handler to `webhooks.py` and then add a new file to `modules` that will run the workflow step by step.
+Tableau Webhooks contains one more module called `broadcast.py` which allows for automatic updates of content published to Tableau's Broadcast service whenever a workbook is refreshed on a Tableau Cloud site. This is the only out of the box workflow built-in to Tableau Webhooks. If you wish to add a new workflow to this server, use the `/webhook` route defined in `index.py`, add an event handler to `webhooks.py` and then add a new file to `modules` that will run the workflow step by step.
 
 The `libs` folder contains reusable functionality such as sending requests to Tableau's REST API in `tableau_rest.py`, generation of JWTs in `connected_apps.py` as well as defining a Session class in `session.py` used to establish REST API sessions.
 
