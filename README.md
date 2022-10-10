@@ -1,6 +1,6 @@
 # Tableau Webhooks
 
-This is a Tableau automation server leveraging the [Webhooks API](https://www.tableau.com/developer/tools/webhook-api) to orchestrate processes dependent on events taking place in Tableau Cloud or Tableau Server.
+This is a Tableau automation server leveraging the [Webhooks](https://www.tableau.com/developer/tools/webhook-api) to orchestrate workflows dependent on events taking place in Tableau Cloud or Tableau Server.
 
 <p align="center">
   <img 
@@ -16,9 +16,9 @@ This is a Tableau automation server leveraging the [Webhooks API](https://www.ta
 
 </br>
 
-The Webhooks API supports events related to resources such as workbooks, datasources and administrator users. This automation server will receive `POST` requests from your Tableau environment when events take place, allowing you to implement functionality such as being notified via Slack, Twilio or other messaging services as well as automating resource management. To provide automation features, this server is setup to make requests to Tableau's [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm).
+Tableau [Webhooks](https://www.tableau.com/developer/tools/webhook-api) supports events related to resources such as workbooks, datasources and administrator users. This automation server will receive `POST` requests from your Tableau environment when events take place, allowing you to implement functionality such as being notified via Slack, Twilio or other messaging services as well as automating resource management. To provide automation features, this server is setup to make requests to Tableau's [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm).
 
-The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documentation lists a few sample use cases:
+The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documentation lists a few sample use cases that exemplify the usage of an automation server:
 
 >- When an extract refresh fails, file a ticket in ServiceNow automatically.
 >- When a workbook is updated, notify your team via their Slack channel.
@@ -44,6 +44,7 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
     - [REST API Authentication](#rest-api-authentication)
   - [Heroku Deployment](#heroku-deployment)
     - [Steps](#steps)
+- [Contributing](#contributing)
 
 </br>
 
@@ -57,7 +58,7 @@ Tableau Webhooks is built to handle all event types such that you can deploy a s
 
 ## Workflows
 
-You can think of processes that integrates a webhook with custom automation as a workflow. A workflow starts with an event ocurring in a Tableau Server or Tableau Cloud site. If a webhook as been deployed to respond to this type of event, Tableau will then send an `HTTP POST` request to Tableau Webhooks at the `/webhook` URL. The webhook request will contain a payload with data that can be used to process the event and to determine if Tableau Webhooks should run an automation process. 
+You can think of processes that integrate a webhook with custom automation as a workflow. A workflow starts with an event ocurring in a Tableau Server or Tableau Cloud site. If a webhook has been deployed to respond to this type of event, Tableau will then send an `HTTP POST` request to Tableau Webhooks at the `/webhook` URL. The webhook request will contain a payload with data that can be used to process the event and to determine if Tableau Webhooks should run an automation process. 
 
 The following flowchart illustrates what this process looks like.
 
@@ -87,13 +88,15 @@ Webhooks workflows start by identifying a need that can be fulfilled by automati
   >
 </p>
 
-Once the need is identified, developers can start by configuring a webhook on Tableau using REST API [CRUD methods](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_notifications.htm) for webhooks. At the same time developers can prototype automation logic in Tableau Webhooks by adding code to the corresponding event handler in the `webhooks.py` module. By default all supported event types have empty placeholders in this file, allowing you to provide your own way to handle Tableau events.
+Once the need is identified, developers can start by configuring a webhook on Tableau using REST API [CRUD methods](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_notifications.htm) for webhooks. Note that all webhooks must be configured so that they send `POST` requests to the `/webhook` endpoint for your instance of Tableau Webhooks. In other words the URL will look similar to this `https://my-tableau-webhooks-domain/webhook`. 
+
+At the same time developers can prototype automation logic by adding code to the corresponding event handler in the `webhooks.py` module. By default all supported event types have empty placeholders in this file, allowing you to provide your own way to handle Tableau events.
 
 Tableau Webhooks have a [test endpoint](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-get-started.html) that can be used to trigger sample payloads which is very useful for developing these integrations.
 
 You can also run [Tableau Webhooks locally](#local-usage) in development mode. Developers can then use `curl` or [Postman](#postman-collection) to send realistic payloads to the local server to prototype event handling and to run real workflows without having to push code to production.
 
-The following tree diagram highlights the most important files for Tableau Webhooks containing it's core functionality. The server routes are defined in `index.py`. We recommend that you keep this file minimal for readibility and maintainability. Therefore, workflows are defined under the `modules` folder. This is where you will find `webhooks.py` defining webhook event handlers. Notice that `index.py` declares a route called `/webhook` which receives `POST` requests and then uses a function from `webhooks.py` to handle all incoming payloads.
+The following tree diagram highlights the most important files for Tableau Webhooks containing it's core functionality. The server routes are defined in `index.py`. We recommend that you keep this file minimal for readibility and maintainability. Therefore, workflows are defined under the `modules` folder. This is where you will find `webhooks.py` defining webhook event handlers. Notice that `index.py` declares a route called `/webhook` which receives `POST` requests and then imports a function from `webhooks.py` to handle all incoming payloads. This allows for routes and event handlers to be defined separately.
 
 ```bash
 .
@@ -113,9 +116,9 @@ The following tree diagram highlights the most important files for Tableau Webho
     └── log.py
 ```
 
-Tableau Webhooks contains one more module called `broadcast.py` which allows for automatic updates of content published to Tableau's Broadcast service whenever a workbook is refreshed on a Tableau Cloud site. This is the only out of the box workflow built-in to Tableau Webhooks. If you wish to add a new workflow to this server, define a new route in `index.py`, add an event handler to `webhooks.py` and then add a new file to `modules` that will run the workflow step by step with reusable functionality found in the `libs` folder.
+Tableau Webhooks contains one more module called `broadcast.py` which allows for automatic updates of content published to Tableau's Broadcast service whenever a workbook is refreshed on a Tableau Cloud site. This is the only out of the box workflow built-in to Tableau Webhooks. If you wish to add a new workflow to this server, define a new route in `index.py`, add an event handler to `webhooks.py` and then add a new file to `modules` that will run the workflow step by step.
 
-The `libs` folder contains reusable functionality such as requests to Tableau's REST API in `tableau_rest.py`, generation of JWTs in `connected_apps.py` as well as a Session class in `session.py` used to establish REST API sessions.
+The `libs` folder contains reusable functionality such as sending requests to Tableau's REST API in `tableau_rest.py`, generation of JWTs in `connected_apps.py` as well as defining a Session class in `session.py` used to establish REST API sessions.
 
 The `utils` folder contains supporting functionality such as environment validation, exceptions and logging. The `logs` folder stores logging messages in `webhooks.log`. Production environments will log messages with a level of `INFO` and above while development environments will log everything starting from `DEBUG` and above. This behavior is controlled by the `FLASK_ENV` environment variable (*for more information see [Flask's documentation](https://flask.palletsprojects.com/en/2.2.x/config/)*)
 
@@ -394,3 +397,7 @@ web: gunicorn index:app
 # pushes your git branch to the Heroku remote
 git push heroku {branch-name}
 ```
+
+# Contributing
+
+This project welcomes new contributors with open arms. Together we can expand the `#datadev` community and tackle some of the most interesting challenges in the Tableau world. For more information on contribution guidelines please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file. If you wish to contribute to this repository, we advise that you join Tableau's [Developer Program](https://www.tableau.com/developer). In particular, we recommend that you participate in the Slack workspace available to registered members so we can support others in the community and drive them towards this project to meet their Tableau Webhooks needs.
