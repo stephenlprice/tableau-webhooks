@@ -84,7 +84,7 @@ Webhooks workflows start by identifying a need that can be fulfilled by automati
   <img 
     src="assets/images/tableau-webhooks-development.png" 
     alt="tableau webhooks development flowchart"
-    style="width: 60%;"
+    style="width: 80%;"
   >
 </p>
 
