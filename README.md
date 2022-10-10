@@ -33,6 +33,7 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
 - [Concepts](#concepts)
   - [Workflows](#workflows)
   - [Development](#development)
+  - [File Structure](#file-structure)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Installation](#installation)
@@ -40,7 +41,7 @@ The [Webhooks API ](https://www.tableau.com/developer/tools/webhook-api) documen
   - [Environment Variables](#environment-variables)
   - [Local Usage](#local-usage)
   - [Postman Collection](#postman-collection)
-    - [Environment file](#environment-file)
+    - [Environment File](#environment-file)
     - [REST API Authentication](#rest-api-authentication)
   - [Heroku Deployment](#heroku-deployment)
     - [Steps](#steps)
@@ -95,6 +96,10 @@ At the same time developers can prototype automation logic by adding code to the
 Tableau Webhooks have a [test endpoint](https://help.tableau.com/current/developer/webhooks/en-us/docs/webhooks-get-started.html) that can be used to trigger sample payloads which is very useful for developing these integrations.
 
 You can also run [Tableau Webhooks locally](#local-usage) in development mode. Developers can then use `curl` or [Postman](#postman-collection) to send realistic payloads to the local server to prototype event handling and to run real workflows without having to push code to production.
+
+</br>
+
+## File Structure
 
 The following tree diagram highlights the most important files for Tableau Webhooks containing it's core functionality. The server routes are defined in `index.py`. We recommend that you keep this file minimal for readibility and maintainability. Therefore, workflows are defined under the `modules` folder. This is where you will find `webhooks.py` defining webhook event handlers. Notice that `index.py` declares a route called `/webhook` which receives `POST` requests and then imports a function from `webhooks.py` to handle all incoming payloads. This allows for routes and event handlers to be defined separately.
 
@@ -319,7 +324,7 @@ Once you have added a webhook to a Tableau site, you can test it using the `test
 
 </br>
 
-### Environment file
+### Environment File
 
 The Postman collection was built to leverage the provided environment file which will store useful information such as credentials and URLs as well as allowing scripts to update variables for you automatically.
 
